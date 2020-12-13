@@ -47,6 +47,7 @@
   <section title="Introduction" anchor="sect-1">
 
     <t>
+	The introduction goes here
     </t>
 
     <section title="Requirements Language">
@@ -72,8 +73,9 @@
     </t>
 
     <t>
-	OLD:
-	6.5.  Hold Timer Expired Error Handling
+	OLD: 6.5.  Hold Timer Expired Error Handling
+    </t>
+    <t>
 	If a system does not receive successive KEEPALIVE, UPDATE, and/or
 	NOTIFICATION messages within the period specified in the Hold Time
 	field of the OPEN message, then the NOTIFICATION message with the
@@ -84,6 +86,8 @@
     <t>
 	NEW:
 	6.5.  Hold Timer Expired Error Handling
+    </t>
+    <t>
 	If a system does not send and receive successive KEEPALIVE, UPDATE,
 	and/or NOTIFICATION messages within the period specified in the Hold
 	Time field of the open message, then the BGP connection is closed and
@@ -113,11 +117,8 @@
   <section title="Acknowledgements" anchor="sect-10">
 
     <t>
-      The authors would like to acknowledge the contributions from
-      Ben Cox, William McCall, Saku Ytti, Jared Mauch, Enke Chen,
-      Randy Bush, Christoph Loibl, Jakob Heitz, Robert Raszuk, Keyur Patel,
-      Jeff Tantsura, Tony Li, and John Scudder for their helpful review
-      of this document.
+      The authors would like to thank Ben Cox, William McCall...
+      for their helpful review of this document.
     </t>
 
   </section>
