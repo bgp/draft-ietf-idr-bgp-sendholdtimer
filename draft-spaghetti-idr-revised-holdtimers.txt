@@ -1,0 +1,168 @@
+
+
+
+
+Network Working Group                                        J. Snijders
+Internet-Draft                                         December 13, 2020
+Updates: 6486 (if approved)
+Intended status: Standards Track
+Expires: June 16, 2021
+
+
+               Revised Error Handling for BGP Hold Timers
+               draft-spaghetti-idr-revised-holdtimers-00
+
+Abstract
+
+   Routers be looping when OutQ stuck.  This doc updates 4271.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on June 16, 2021.
+
+Copyright Notice
+
+   Copyright (c) 2020 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+Snijders                  Expires June 16, 2021                 [Page 1]
+
+Internet-Draft             Revised Hold Timers             December 2020
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   2
+   2.  Updates to RFC 4271 . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   2
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   2
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   2
+   6.  Normative References  . . . . . . . . . . . . . . . . . . . .   3
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   3
+
+1.  Introduction
+
+1.1.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Updates to RFC 4271
+
+   OLD: 6.5.  Hold Timer Expired Error Handling If a system does not
+   receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages
+   within the period specified in the Hold Time field of the OPEN
+   message, then the NOTIFICATION message with the Hold Timer Expired
+   Error Code is sent and the BGP connection is closed.
+
+   NEW: 6.5.  Hold Timer Expired Error Handling If a system does not
+   send and receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION
+   messages within the period specified in the Hold Time field of the
+   open message, then the BGP connection is closed and a log message is
+   emitted.
+
+3.  Security Considerations
+
+   Withdraws stuck Routing loops TCP receive window 0
+
+4.  IANA Considerations
+
+   None so far.
+
+5.  Acknowledgements
+
+   The authors would like to acknowledge the contributions from Ben Cox,
+   William McCall, Saku Ytti, Jared Mauch, Enke Chen, Randy Bush,
+   Christoph Loibl, Jakob Heitz, Robert Raszuk, Keyur Patel, Jeff
+
+
+
+Snijders                  Expires June 16, 2021                 [Page 2]
+
+Internet-Draft             Revised Hold Timers             December 2020
+
+
+   Tantsura, Tony Li, and John Scudder for their helpful review of this
+   document.
+
+6.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
+              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
+              DOI 10.17487/RFC4271, January 2006,
+              <https://www.rfc-editor.org/info/rfc4271>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+Author's Address
+
+   Job Snijders
+   Theodorus Majofskistraat 100
+   Amsterdam  1065 SZ
+   The Netherlands
+
+   Email: job@sobornost.net
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Snijders                  Expires June 16, 2021                 [Page 3]
