@@ -10,7 +10,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="std" docName="draft-spaghetti-idr-revised-holdtimers-00" updates="6486" ipr="trust200902">
+<rfc category="std" docName="draft-spaghetti-idr-revised-holdtimers-00" updates="4271" ipr="trust200902">
   
 <front>
     
@@ -34,8 +34,8 @@
   <abstract>
 
     <t>
-      Routers be looping when OutQ stuck.
-      This doc updates 4271.
+      Routers could have neighbors who are stuck on their input queue.
+      This document updates RFC 4271.
     </t>
 
   </abstract>
@@ -66,6 +66,10 @@
   </section>
 
   <section title="Updates to RFC 4271" anchor="sect-2">
+
+    <t>
+        Few words need to be changed in <xref target="RFC4271"/>.
+    </t>
 
     <t>
 	OLD:
