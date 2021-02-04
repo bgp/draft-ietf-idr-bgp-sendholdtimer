@@ -4,7 +4,7 @@
 #
 
 # Your nroff document is called foo.txt. Change below as appropiate.
-NAME=draft-spaghetti-idr-revised-holdtimers
+NAME=draft-spaghetti-idr-bgp-sendholdtimer
 
 all: $(NAME).xml
 	xml2rfc $(NAME).xml --html --text

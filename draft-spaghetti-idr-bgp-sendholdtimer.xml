@@ -10,22 +10,22 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="std" docName="draft-spaghetti-idr-revised-holdtimers-00" updates="4271" ipr="trust200902">
+<rfc category="std" docName="draft-spaghetti-idr-bgp-sendholdtimer-00" updates="4271" ipr="trust200902">
   
 <front>
     
-  <title abbrev="Revised Hold Timers">Revised Error Handling for BGP Hold Timers</title>
+  <title abbrev="BGP SendHoldTimer">BGP SendHoldTimer</title>
 
   <author fullname="Job Snijders" initials="J." surname="Snijders">
-    <organization></organization>
+    <organization>Fastly</organization>
     <address>
       <postal>
-        <street>Theodorus Majofskistraat 100</street>
+        <street />
         <city>Amsterdam</city>
-        <code>1065 SZ</code>
+        <code />
         <country>The Netherlands</country>
       </postal>
-      <email>job@sobornost.net</email>
+      <email>job@fastly.com</email>
     </address>
   </author>
 
