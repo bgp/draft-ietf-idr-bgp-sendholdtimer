@@ -23,7 +23,7 @@
         <street />
         <city>Amsterdam</city>
         <code />
-        <country>The Netherlands</country>
+        <country>Netherlands</country>
       </postal>
       <email>job@fastly.com</email>
     </address>
@@ -147,10 +147,10 @@
   <!-- 	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC0793" /> it is
  -->
   <references title="Normative References">
-    <?rfc include="reference.RFC.2119"?>
-    <?rfc include="reference.RFC.4271"?>
-    <?rfc include="reference.RFC.0793"?>
-    <?rfc include="reference.RFC.8174"?>
+    <?rfc include="reference.RFC.2119.xml"?>
+    <?rfc include="reference.RFC.4271.xml"?>
+    <?rfc include="reference.RFC.0793.xml"?>
+    <?rfc include="reference.RFC.8174.xml"?>
   </references>
 
 <!--
