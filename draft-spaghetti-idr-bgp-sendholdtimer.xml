@@ -58,7 +58,7 @@
   <section title="Introduction" anchor="sect-1">
 
     <t>
-	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC793" /> it is
+	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC0793" /> it is
   possible for hosts in ESTABLISHED state to encounter a peer that is advertising
   a zero windows size and preventing KEEPALIVE, CEASE, WITHDRAW, UPDATE and other
   critical messages from being sent.
@@ -144,10 +144,12 @@
 </middle>
 
 <back>
-  
+  <!-- 	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC0793" /> it is
+ -->
   <references title="Normative References">
     <?rfc include="reference.RFC.2119"?>
     <?rfc include="reference.RFC.4271"?>
+    <?rfc include="reference.RFC.0793"?>
     <?rfc include="reference.RFC.8174"?>
   </references>
 
