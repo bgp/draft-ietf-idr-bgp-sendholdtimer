@@ -28,7 +28,18 @@
       <email>job@fastly.com</email>
     </address>
   </author>
-
+  <author fullname="Ben Cartwright-Cox" initials="B." surname="Cartwright-Cox">
+    <organization></organization>
+    <address>
+      <postal>
+        <street />
+        <city>London</city>
+        <code />
+        <country>United Kingdom</country>
+      </postal>
+      <email>ben@benjojo.co.uk</email>
+    </address>
+  </author>
   <date />
 
   <abstract>
