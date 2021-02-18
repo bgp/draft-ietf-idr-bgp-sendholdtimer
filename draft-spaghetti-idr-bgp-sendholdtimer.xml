@@ -58,7 +58,14 @@
   <section title="Introduction" anchor="sect-1">
 
     <t>
-	The introduction goes here
+	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC793" /> it is
+  possible for hosts in ESTABLISHED state to encounter a peer that is advertising
+  a zero windows size and preventing KEEPALIVE, CEASE, WITHDRAW, UPDATE and other
+  critical messages from being sent.
+
+  Since implementaions themselvs do not have a way to handle this, this often results
+  in a soft Denial Of Service either to handling messages or delivering reachablity
+  information to other peers.
     </t>
 
     <section title="Requirements Language">
