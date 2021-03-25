@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="US-ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
@@ -10,11 +10,15 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 
-<rfc category="std" docName="draft-spaghetti-idr-bgp-sendholdtimer-00" updates="4271" ipr="trust200902">
+<rfc
+  category="std"
+  docName="draft-spaghetti-idr-bgp-sendholdtimer-00"
+  updates="4271"
+  ipr="trust200902">
   
 <front>
     
-  <title abbrev="BGP SendHoldTimer">BGP SendHoldTimer</title>
+  <title abbrev="BGP SendHoldTimer">Border Gateway Protocol 4 (BGP-4) Send Hold Timer</title>
 
   <author fullname="Job Snijders" initials="J." surname="Snijders">
     <organization>Fastly</organization>
@@ -42,15 +46,31 @@
   </author>
   <date />
 
+  <area>Routing</area>
+  <workgroup>IDR</workgroup>
+  <keyword>BGP</keyword>
+  <keyword>session</keyword>
+  <keyword>TCP</keyword>
+  <keyword>EBGP</keyword>
+
+
   <abstract>
 
     <t>
-      Routers could have neighbors who are stuck on their input queue.
-      This document updates RFC 4271.
+      This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
+      A session should be terminated if the TCP receive window is zero for the duration of the Hold Timer, in this situation the peer is expected to terminate the connection.
+      For robustness, this document specifies that the local system should also close the connection.
+
+      This document updates RFC4271.
     </t>
 
   </abstract>
-  
+
+  <note title="Requirements Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119">RFC 2119</xref>.
+      </t>
+  </note>
+
 </front>
 
 <middle>
@@ -58,33 +78,22 @@
   <section title="Introduction" anchor="sect-1">
 
     <t>
-	Since the BGP Protocol <xref target="RFC4271" /> runs over TCP <xref target="RFC0793" /> it is
-  possible for hosts in ESTABLISHED state to encounter a peer that is advertising
-  a zero windows size and preventing KEEPALIVE, CEASE, WITHDRAW, UPDATE and other
-  critical messages from being sent.
-
-  Since implementaions themselvs do not have a way to handle this, this often results
-  in a soft Denial Of Service either to handling messages or delivering reachablity
-  information to other peers.
+      This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
+      A session should be terminated if the TCP <xref target="RFC0793" /> receive window is zero for the duration of the Hold Timer, in this situation the peer is expected to terminate the connection.
+      For robustness, this document specifies that the local system should also close the connection.
     </t>
 
-    <section title="Requirements Language">
+    <t>
+      The BGP runs over TCP it is possible for hosts in ESTABLISHED state to encounter a peer that is advertising a zero windows size and preventing KEEPALIVE, CEASE, WITHDRAW, UPDATE and other critical messages from being sent.
+    </t>
 
-      <t>
-        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-        NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
-        "MAY", and "OPTIONAL" in this document are to be interpreted as
-        described in BCP 14 <xref format="default" pageno="false"
-        target="RFC2119"/> <xref format="default" pageno="false"
-        target="RFC8174"/> when, and only when, they appear in all
-        capitals, as shown here.
-      </t>
-
-    </section>
+    <t>
+      Since implementaions themselvs do not have a way to handle this, this often results in a soft Denial Of Service either to handling messages or delivering reachablity information to other peers.
+    </t>
 
   </section>
 
-  <section title="Updates to RFC 4271" anchor="sect-2">
+  <section title="Changes to RFC 4271" anchor="sect-2">
 
     <t>
         Few words need to be changed in <xref target="RFC4271"/>.
@@ -114,6 +123,15 @@
 
   </section>
 
+  <section title="Acknowledgements" anchor="sect-10">
+
+    <t>
+      The authors would like to thank Ben Cox, William McCall...
+      for their helpful review of this document.
+    </t>
+
+  </section>
+
   <section title="Security Considerations" anchor="sect-8">
 
     <t>
@@ -127,19 +145,12 @@
   <section title="IANA Considerations" anchor="sect-9">
 
     <t>
-      None so far.
+      This document has no actions for IANA.
     </t>
 
   </section>
 
-  <section title="Acknowledgements" anchor="sect-10">
 
-    <t>
-      The authors would like to thank Ben Cox, William McCall...
-      for their helpful review of this document.
-    </t>
-
-  </section>
 
 </middle>
 
