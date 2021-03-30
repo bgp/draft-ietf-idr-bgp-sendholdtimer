@@ -182,7 +182,7 @@
           Failure to disconnect from a 'stuck' peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
         </t>
         <t>
-          Failure to disconnect from a peer leads to the situation where the local system's other BGP peers cannot be informed of new reachability information.
+          Failure to disconnect from a 'stuck' peer hinders the local system's ability to inform other BGP peers with current network reachability information.
         </t>
       </list>
     </t>
@@ -226,7 +226,7 @@
     <reference anchor="openbgpd" target="https://marc.info/?l=openbsd-tech&amp;m=160796802508185&amp;w=2">
       <front>
         <title>bgpd send side hold timer</title>
-        <author><organization>OpenBSD</organization></author>
+        <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
         <date month="December" year="2020" />
       </front>
     </reference>
