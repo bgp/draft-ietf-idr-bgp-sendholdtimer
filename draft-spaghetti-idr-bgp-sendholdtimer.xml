@@ -98,7 +98,8 @@
   <section title="Changes to RFC 4271">
 
     <t>
-        In section 8 BGP Finite State Machine (FSM) <xref target="RFC4271"/>. The following mandatory session attributes are added
+        In section 8 BGP Finite State Machine (FSM) <xref target="RFC4271"/>.
+        The following mandatory session attributes are added:
     </t>
 
     <t>
@@ -124,8 +125,7 @@
     </t>
 
     <t>
-	NEW:
-	6.5.  Hold Timer Expired Error Handling
+	NEW: 6.5.  Hold Timer Expired Error Handling
     </t>
     <t>
 	If a system does not send and receive successive KEEPALIVE, UPDATE,
@@ -155,6 +155,9 @@
           OpenBGPD <xref target="openbgpd"/>
         </t>
        </list>
+     </t>
+     <t>
+       While not a BGP implementation, as a result of investigation into this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option was improved, allowing easier termination of TCP sessions which are not progressing data <xref target="TCP_USER_TIMEOUT"/>.
      </t>
    </section>
 
@@ -228,6 +231,14 @@
         <title>bgpd send side hold timer</title>
         <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
         <date month="December" year="2020" />
+      </front>
+    </reference>
+
+    <reference anchor="TCP_USER_TIMEOUT" target="https://mailarchive.ietf.org/arch/msg/idr/KOU59BTIvsqv8OHVBIvcVr97fD4/">
+      <front>
+        <title>[Idr] TCP &amp; BGP: Some don't send terminate BGP when holdtimer expired, because TCP recv window is 0</title>
+        <author fullname="Enke Chen"><organization>Paolo Alto Networks</organization></author>
+        <date month="January" year="2021" />
       </front>
     </reference>
 
