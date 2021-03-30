@@ -1,6 +1,15 @@
 BGP SendHoldTimer IETF Draft Repository
 =========================================
 
+<img src="http://sobornost.net/~job/bgp_holdtimer_tcp_deathgrip.gif">
+
+Ten years ago 'a horse was put to rest, but was it?
+
+2010 - start   https://mailarchive.ietf.org/arch/msg/idr/q0Sx5d3zZjfOmOQ4lO2OZAHh9Lc/
+2010 - end     https://mailarchive.ietf.org/arch/msg/idr/hu3LQ2uckIEAtdbRRdl571OiItM/
+2020 - restart https://mailarchive.ietf.org/arch/msg/idr/L9nWFBpW0Tci0c9DGfMoqC1j_sA/
+
+
 Authoring Conventions
 ---------------------
 
