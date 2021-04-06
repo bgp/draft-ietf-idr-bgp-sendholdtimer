@@ -1,0 +1,55 @@
+to do list:
+
+bgp send timer Event definition
+
+bgp send timer definition
+
+Define when the timer starts 
+
+Copy:
+
+```
+      If the HoldTimer_Expires (Event 10), the local system:
+
+        - sends a NOTIFICATION message with the error code Hold Timer
+          Expired,
+
+        - sets the ConnectRetryTimer to zero,
+
+        - releases all BGP resources,
+
+        - drops the TCP connection,
+
+        - increments the ConnectRetryCounter,
+
+        - (optionally) performs peer oscillation damping if the
+          DampPeerOscillations attribute is set to TRUE, and
+
+        - changes its state to Idle.
+```
+
+Copy (Page 69):
+
+```
+      If the local system receives a KEEPALIVE message (KeepAliveMsg
+      (Event 26)), the local system:
+
+        - restarts the HoldTimer and
+
+        - changes its state to Established.
+```
+
+New event, TcpConnectionDataWritten to indicate the sucessful writing of data into the send Q
+
+
+```
+      When the system writes data into the socket send queue (TcpConnectionDataWritten
+      (Event XX)), the local system:
+
+        - restarts the SendHoldTimer
+```
+
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=9d9b1ee0b2d1c9e02b2338c4a4b0a062d2d3edac
+
+https://tools.ietf.org/html/rfc5482 -- TCP User Timeout Option
+
