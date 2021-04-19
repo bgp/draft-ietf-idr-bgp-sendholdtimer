@@ -100,43 +100,72 @@
 
   </section>
 
-  <section title="Changes to RFC 4271">
+  <section title="Definition of the Send Hold Timer attribute">
+
+  <!-- todo:
+   
+     rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
+     rfc 4271 section 6.* - Send Hold Timer Expired Error Handling
+     rfc 4271 section 8.1.1 - event
+     rfc 4271 section 8.1.3 - timer
+     rfc 4271 section 8.2.1.4 - fsm event numbers?
+    --> 
+
+  <t>
+    BGP speakers are implemented following a conceptual model "BGP Finite State Machine" (FSM) outlined in section 8 of <xref target="RFC4271"/>.
+    This specification extends the BGP FSM as following.
+  </t>
+
+  <t> 
+    The following mandatory session attributes are added to Section 8 paragraph 6, before "The state session attribute indicates the current state of the BGP FSM":
+  </t>
+
+  <t>
+    <list style="empty">
+      <t> 
+        9) SendHoldTimer
+      </t>
+      <t> 
+        10) SendHoldTime
+      </t>
+    </list>
+  </t>
+
+  <t>
+    Section 8.1.3 <xref target="RFC4271"/> is extended as following:
+  </t>
+  <t>
+    Event XX: SendHoldTimer_Expires 
+    Definition : An event generated when the SendHoldTimer expires.
+    Status: Mandatory
+  </t>
+
+  
+  <t>
+      If the SendHoldTimer_Expires (Event XX), the local system:
+
+        - sends a NOTIFICATION message with the error code Send Hold Timer
+          Expired,
+
+        - sets the ConnectRetryTimer to zero,
+
+        - releases all BGP resources,
+
+        - drops the TCP connection,
+
+        - increments the ConnectRetryCounter,
+
+        - (optionally) performs peer oscillation damping if the
+          DampPeerOscillations attribute is set to TRUE, and
+
+        - changes its state to Idle.
+</t>
 
     <t>
-        In section 8 BGP Finite State Machine (FSM) <xref target="RFC4271"/>.
-        The following mandatory session attributes are added:
-    </t>
+    <t>
+	NEW: 6.9. Send Hold Timer Expired Error Handling
 
-    <t>
-      <list style="empty">
-          <t> 
-              9) SendHoldTimer
-          </t>
-          <t> 
-              10) SendHoldTime
-          </t>
-      </list>
-    </t>
-
-    <t>
-	OLD: 6.5.  Hold Timer Expired Error Handling
-    </t>
-    <t>
-	If a system does not receive successive KEEPALIVE, UPDATE, and/or
-	NOTIFICATION messages within the period specified in the Hold Time
-	field of the OPEN message, then the NOTIFICATION message with the
-	Hold Timer Expired Error Code is sent and the BGP connection is
-	closed.
-    </t>
-
-    <t>
-	NEW: 6.5.  Hold Timer Expired Error Handling
-    </t>
-    <t>
-	If a system does not send and receive successive KEEPALIVE, UPDATE,
-	and/or NOTIFICATION messages within the period specified in the Hold
-	Time field of the open message, then the BGP connection is closed and
-	a log message is emitted.
+	If a system does not send and receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Hold Time field of the open message, then the BGP connection is closed and a log message is emitted.
     </t>
 
   </section>
