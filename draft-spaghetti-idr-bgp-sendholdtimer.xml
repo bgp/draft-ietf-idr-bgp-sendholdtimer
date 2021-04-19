@@ -32,6 +32,7 @@
       <email>job@fastly.com</email>
     </address>
   </author>
+
   <author fullname="Ben Cartwright-Cox" initials="B." surname="Cartwright-Cox">
     <organization></organization>
     <address>
@@ -58,7 +59,7 @@
 
     <t>
       This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
-      A session should be terminated if the TCP receive window is zero for the duration of the Hold Timer, in this situation the peer is expected to terminate the connection.
+      A session should be terminated if the TCP receive window is zero for the duration of the Send Hold Timer, in this situation the peer is expected to terminate the connection.
       For robustness, this document specifies that the local system should also close the connection.
 
       This document updates RFC4271.
@@ -79,18 +80,22 @@
 
     <t>
       This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
-      A session should be terminated if the TCP <xref target="RFC0793" /> receive window is zero for the duration of the Hold Timer, in this situation the peer is expected to terminate the connection.
-      For robustness, this document specifies that the local system should also close the connection.
     </t>
 
     <t>
-      As BGP runs over TCP it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP zero windows size and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, and other critical messages across the wire.
-    </t>
-
-    <t>
+      As BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
       At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.
+    </t>
+    <t>
       Not terminating a stuck BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="l3outage"/>
+    </t>
+    <t>
+      This specification intends to improve this situation by requiring sessions to be terminated if the TCP receive window is zero for the duration of the Send Hold Timer.
+      Through codification of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
+    </t>
+    <t>
+      BGP speakers following this specification do not exclusively rely on remote systems robustly closing connections, but will also locally close connections.
     </t>
 
   </section>
@@ -145,29 +150,29 @@
       This is not intended as, and must not be construed to be, a catalog of available implementations or their features.
       Readers are advised to note that other implementations may exist.
     </t>
+
     <t>
       According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
       It is up to the individual working groups to use this information as they see fit".
     </t>
+
     <t>
       <list style="symbols">
         <t>
           OpenBGPD <xref target="openbgpd"/>
         </t>
-       </list>
-     </t>
-     <t>
-       While not a BGP implementation, as a result of investigation into this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option was improved, allowing easier termination of TCP sessions which are not progressing data <xref target="TCP_USER_TIMEOUT"/>.
-     </t>
-   </section>
+      </list>
+    </t>
 
+    <t>
+       While not a BGP implementation, as a result of investigation into this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option was improved, allowing easier termination of TCP sessions which are not progressing data <xref target="TCP_USER_TIMEOUT"/>.
+    </t>
+  </section>
 
   <section title="Acknowledgements">
-
     <t>
       The authors would like to thank William McCall for their helpful review of this document.
     </t>
-
   </section>
 
   <section title="Security Considerations">
