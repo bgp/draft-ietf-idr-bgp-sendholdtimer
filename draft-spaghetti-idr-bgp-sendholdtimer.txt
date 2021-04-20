@@ -76,11 +76,11 @@ Table of Contents
    3.  Send Hold Timer Expired Error Handling  . . . . . . . . . . .   4
    4.  Implementation status - RFC EDITOR: REMOVE BEFORE
            PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   4
-   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
      8.2.  Informative References  . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -132,13 +132,13 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 2.1.  Session Attributes
 
-   The following mandatory session attributes are added to Section 8
-   paragraph 6, before "The state session attribute indicates the
+   The following mandatory session attributes are added to paragraph 6
+   of Section 8, before "The state session attribute indicates the
    current state of the BGP FSM":
 
       9) SendHoldTimer
 
-      10) SendHoldTime
+      10) SendHoldTime (an initial value of 4 minutes is recommended)
 
 2.2.  SendHoldTimer_Expires Event Definition
 
@@ -148,14 +148,14 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
        Definition : An event generated when the SendHoldTimer expires.
        Status: Mandatory
 
-      If the SendHoldTimer_Expires (Event XX), the local system:
+   If the SendHoldTimer_Expires (Event XX), the local system:
 
-      -  sends a NOTIFICATION message with the error code Send Hold
-         Timer Expired,
-
-      -  sets the ConnectRetryTimer to zero,
+      -  logs a message with the BGP Error Notification Code "Send Hold
+         Timer Expired",
 
       -  releases all BGP resources,
+
+      -  sets the ConnectRetryTimer to zero,
 
       -  drops the TCP connection,
 
@@ -174,13 +174,40 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
       -  changes its state to Idle.
 
+   If the DelayOpenTimer_Expires event (Event 12) occurs in the Connect
+   state, the local system:
+
+      -  sends an OPEN message to its peer,
+
+      -  sets the HoldTimer to a large value, and
+
+      -  sets the SendHoldTimer to a large value, and
+
+      -  changes its state to OpenSent.
+
+   If the DelayOpen attribute is set to FALSE, the local system:
+
+      -  stops the ConnectRetryTimer (if running) and sets the
+         ConnectRetryTimer to zero,
+
+      -  completes BGP initialization
+
+      -  sends an OPEN message to its peer,
+
+      -  sets the HoldTimer to a large value, and
+
+      -  changes its state to OpenSent.
+
+   A HoldTimer value of 4 minutes is suggested.
+
+   A SendHoldTimer value of 4 minutes is suggested.
+
 3.  Send Hold Timer Expired Error Handling
 
-   NEW: 6.9.  Send Hold Timer Expired Error Handling If a system does
-   not send and receive successive KEEPALIVE, UPDATE, and/or
-   NOTIFICATION messages within the period specified in the Hold Time
-   field of the open message, then the BGP connection is closed and a
-   log message is emitted.
+   If a system does not send and receive successive KEEPALIVE, UPDATE,
+   and/or NOTIFICATION messages within the period specified in the Send
+   Hold Time, then the BGP connection is closed and a log message is
+   emitted.
 
 4.  Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION
 
@@ -191,6 +218,14 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    assist the IETF in its decision processes in progressing drafts to
    RFCs.  Please note that the listing of any individual implementation
    here does not imply endorsement by the IETF.  Furthermore, no effort
+
+
+
+Snijders & Cartwright-CoxExpires 22 October 2021                [Page 4]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
+
    has been spent to verify the information presented here that was
    supplied by IETF contributors.  This is not intended as, and must not
    be construed to be, a catalog of available implementations or their
@@ -216,27 +251,17 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    The authors would like to thank William McCall for their helpful
    review of this document.
 
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 4]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
-
 6.  Security Considerations
 
    This specification addresses the vulnerability of a BGP speaker to a
    potential attack whereby a BGP peer can pretend to be unable to
-   process BGP messages and in doing so create a scenario in the local
-   system is poisoned with stale routing information.
+   process BGP messages and in doing so create a scenario where the
+   local system is poisoned with stale routing information.
 
-   There are three detrimental aspects to the problem this document
-   describes:
+   There are three detrimental aspects to the problem of not robustly
+   handling 'stuck' peers:
 
-   *  Failure to send BGP messages to a peer is implies the peer is
+   *  Failure to send BGP messages to a peer implies the peer is
       operating based on stale routing information.
 
    *  Failure to disconnect from a 'stuck' peer hinders the local
@@ -247,11 +272,15 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
       system's ability to inform other BGP peers with current network
       reachability information.
 
-   Absent this specification, the BGP session would not have been
-   terminated; with this specification, an attacker is disconnected.
-
    In other respects, this specification does not change BGP's security
    characteristics.
+
+
+
+Snijders & Cartwright-CoxExpires 22 October 2021                [Page 5]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
 
 7.  IANA Considerations
 
@@ -271,16 +300,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 5]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
    [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
@@ -309,6 +328,16 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 Authors' Addresses
 
+
+
+
+
+
+Snijders & Cartwright-CoxExpires 22 October 2021                [Page 6]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
+
    Job Snijders
    Fastly
    Amsterdam
@@ -333,4 +362,31 @@ Authors' Addresses
 
 
 
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Snijders & Cartwright-CoxExpires 22 October 2021                [Page 7]

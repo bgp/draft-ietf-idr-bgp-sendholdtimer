@@ -117,21 +117,20 @@
   </t>
 
   <section title="Session Attributes">
-  <t> 
-    The following mandatory session attributes are added to Section 8 paragraph 6, before "The state session attribute indicates the current state of the BGP FSM":
-  </t>
+    <t> 
+      The following mandatory session attributes are added to paragraph 6 of Section 8, before "The state session attribute indicates the current state of the BGP FSM":
+    </t>
 
-  <t>
-    <list style="empty">
-      <t> 
-        9) SendHoldTimer
-      </t>
-      <t> 
-        10) SendHoldTime
-      </t>
-    </list>
-  </t>
-
+    <t>
+      <list style="empty">
+        <t> 
+          9) SendHoldTimer
+        </t>
+        <t> 
+          10) SendHoldTime (an initial value of 4 minutes is recommended)
+        </t>
+      </list>
+    </t>
   </section>
 
   <section title="SendHoldTimer_Expires Event Definition">
@@ -145,29 +144,66 @@
     Status: Mandatory
 </artwork></figure>
 
+    <t>
+    If the SendHoldTimer_Expires (Event XX), the local system:
+    </t>
     <list style="empty">
-    <t>
-      If the SendHoldTimer_Expires (Event XX), the local system:
-      <list style="hanging">
-        <t hangText="-">logs a message with the BGP Error Notification Code "Send Hold Timer Expired",</t>
-        <t hangText="-">releases all BGP resources,</t>
-        <t hangText="-">sets the ConnectRetryTimer to zero,</t>
-        <t hangText="-">drops the TCP connection,</t>
-        <t hangText="-">increments the ConnectRetryCounter,</t>
-        <t hangText="-">(optionally) performs peer oscillation damping if the DampPeerOscillations attribute is set to TRUE, and</t>
-        <t hangText="-">changes its state to Idle.</t>
-      </list>
-    </t>
+      <t>
+        <list style="hanging">
+          <t hangText="-">logs a message with the BGP Error Notification Code "Send Hold Timer Expired",</t>
+          <t hangText="-">releases all BGP resources,</t>
+          <t hangText="-">sets the ConnectRetryTimer to zero,</t>
+          <t hangText="-">drops the TCP connection,</t>
+          <t hangText="-">increments the ConnectRetryCounter,</t>
+          <t hangText="-">(optionally) performs peer oscillation damping if the DampPeerOscillations attribute is set to TRUE, and</t>
+          <t hangText="-">changes its state to Idle.</t>
+        </list>
+      </t>
     </list>
-  </section>
-
-  </section>
-  <section title="Send Hold Timer Expired Error Handling">
 
     <t>
-	If a system does not send and receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Hold Time field of the open message, then the BGP connection is closed and a log message is emitted.
+      If the DelayOpenTimer_Expires event (Event 12) occurs in the Connect state, the local system:
+    </t>
+    <list>
+      <t>
+        <list style="hanging">
+          <t hangText="-">sends an OPEN message to its peer,</t>
+          <t hangText="-">sets the HoldTimer to a large value, and</t>
+          <t hangText="-">sets the SendHoldTimer to a large value, and</t>
+          <t hangText="-">changes its state to OpenSent.</t>
+        </list>
+      </t>
+    </list>
+
+    <t>
+    If the DelayOpen attribute is set to FALSE, the local system:
+    </t>
+    <list>
+      <t>
+        <list style="hanging">
+          <t hangText="-">stops the ConnectRetryTimer (if running) and sets the ConnectRetryTimer to zero,</t>
+	  <t hangText="-">completes BGP initialization</t>
+	  <t hangText="-">sends an OPEN message to its peer,</t>
+	  <t hangText="-">sets the HoldTimer to a large value, and</t>
+	  <t hangText="-">changes its state to OpenSent.</t>
+        </list>
+      </t>
+    </list>
+
+    <t>
+      A HoldTimer value of 4 minutes is suggested.
+    </t>
+    <t>
+      A SendHoldTimer value of 4 minutes is suggested.
     </t>
 
+  </section>
+  </section>
+
+  <section title="Send Hold Timer Expired Error Handling">
+    <t>
+	If a system does not send and receive successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Send Hold Time, then the BGP connection is closed and a log message is emitted.
+    </t>
   </section>
 
   <section title="Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION">
@@ -207,13 +243,13 @@
   <section title="Security Considerations">
 
     <t>
-      This specification addresses the vulnerability of a BGP speaker to a potential attack whereby a BGP peer can pretend to be unable to process BGP messages and in doing so create a scenario in the local system is poisoned with stale routing information.
+      This specification addresses the vulnerability of a BGP speaker to a potential attack whereby a BGP peer can pretend to be unable to process BGP messages and in doing so create a scenario where the local system is poisoned with stale routing information.
     </t>
     <t>
-      There are three detrimental aspects to the problem this document describes:
+      There are three detrimental aspects to the problem of not robustly handling 'stuck' peers:
       <list style="none">
         <t>
-          Failure to send BGP messages to a peer is implies the peer is operating based on stale routing information.
+          Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
         </t>
         <t>
           Failure to disconnect from a 'stuck' peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
@@ -222,9 +258,6 @@
           Failure to disconnect from a 'stuck' peer hinders the local system's ability to inform other BGP peers with current network reachability information.
         </t>
       </list>
-    </t>
-    <t>
-      Absent this specification, the BGP session would not have been terminated; with this specification, an attacker is disconnected.
     </t>
     <t>
       In other respects, this specification does not change BGP's security characteristics.
@@ -236,7 +269,6 @@
     <t>
       This document requests IANA to assign a value named "Send Hold Timer Expired" in the "BGP Error (Notification) Codes" sub-registry under the "Border Gateway Protocol (BGP) Parameters" registry.
     </t>
-
   </section>
 
 </middle>
