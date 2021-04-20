@@ -146,49 +146,48 @@
 
     <t>
     If the SendHoldTimer_Expires (Event XX), the local system:
+      <list style="empty">
+        <t>
+          <list style="hanging">
+            <t hangText="-">logs a message with the BGP Error Notification Code "Send Hold Timer Expired",</t>
+            <t hangText="-">releases all BGP resources,</t>
+            <t hangText="-">sets the ConnectRetryTimer to zero,</t>
+            <t hangText="-">drops the TCP connection,</t>
+            <t hangText="-">increments the ConnectRetryCounter,</t>
+            <t hangText="-">(optionally) performs peer oscillation damping if the DampPeerOscillations attribute is set to TRUE, and</t>
+            <t hangText="-">changes its state to Idle.</t>
+          </list>
+        </t>
+      </list>
     </t>
-    <list style="empty">
-      <t>
-        <list style="hanging">
-          <t hangText="-">logs a message with the BGP Error Notification Code "Send Hold Timer Expired",</t>
-          <t hangText="-">releases all BGP resources,</t>
-          <t hangText="-">sets the ConnectRetryTimer to zero,</t>
-          <t hangText="-">drops the TCP connection,</t>
-          <t hangText="-">increments the ConnectRetryCounter,</t>
-          <t hangText="-">(optionally) performs peer oscillation damping if the DampPeerOscillations attribute is set to TRUE, and</t>
-          <t hangText="-">changes its state to Idle.</t>
-        </list>
-      </t>
-    </list>
-
     <t>
       If the DelayOpenTimer_Expires event (Event 12) occurs in the Connect state, the local system:
+      <list>
+        <t>
+          <list style="hanging">
+            <t hangText="-">sends an OPEN message to its peer,</t>
+            <t hangText="-">sets the HoldTimer to a large value, and</t>
+            <t hangText="-">sets the SendHoldTimer to a large value, and</t>
+            <t hangText="-">changes its state to OpenSent.</t>
+          </list>
+        </t>
+      </list>
     </t>
-    <list>
-      <t>
-        <list style="hanging">
-          <t hangText="-">sends an OPEN message to its peer,</t>
-          <t hangText="-">sets the HoldTimer to a large value, and</t>
-          <t hangText="-">sets the SendHoldTimer to a large value, and</t>
-          <t hangText="-">changes its state to OpenSent.</t>
-        </list>
-      </t>
-    </list>
 
     <t>
     If the DelayOpen attribute is set to FALSE, the local system:
+      <list>
+        <t>
+          <list style="hanging">
+            <t hangText="-">stops the ConnectRetryTimer (if running) and sets the ConnectRetryTimer to zero,</t>
+      <t hangText="-">completes BGP initialization</t>
+      <t hangText="-">sends an OPEN message to its peer,</t>
+      <t hangText="-">sets the HoldTimer to a large value, and</t>
+      <t hangText="-">changes its state to OpenSent.</t>
+          </list>
+        </t>
+      </list>
     </t>
-    <list>
-      <t>
-        <list style="hanging">
-          <t hangText="-">stops the ConnectRetryTimer (if running) and sets the ConnectRetryTimer to zero,</t>
-	  <t hangText="-">completes BGP initialization</t>
-	  <t hangText="-">sends an OPEN message to its peer,</t>
-	  <t hangText="-">sets the HoldTimer to a large value, and</t>
-	  <t hangText="-">changes its state to OpenSent.</t>
-        </list>
-      </t>
-    </list>
 
     <t>
       A HoldTimer value of 4 minutes is suggested.
