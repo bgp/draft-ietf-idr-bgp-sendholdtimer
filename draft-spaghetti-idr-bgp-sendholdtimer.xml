@@ -291,7 +291,7 @@
       </front>
     </reference>
 
-    <reference anchor="openbgpd" target="https://marc.info/?l=openbsd-tech&amp;m=160796802508185&amp;w=2">
+    <reference anchor="openbgpd" target="https://marc.info/?l=openbsd-tech&amp;m=160820754925261&amp;w=2">
       <front>
         <title>bgpd send side hold timer</title>
         <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
