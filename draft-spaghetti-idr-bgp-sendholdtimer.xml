@@ -101,6 +101,10 @@
       For example, as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
       At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.
     </t>
+    <t>
+      Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
+      Therefor this document banks on BGP implementations being able to detect an inability to push more data to the remote peer.
+    </t>
   </section>
 
   <section title="Specification of the Send Hold Timer">
