@@ -86,7 +86,7 @@
       This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="l3outage"/>
     </t>
     <t>
-      This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system has not processed any BGP messages for the duration of the SendHoldTimer.
+      This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTimer.
       Through codification of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>

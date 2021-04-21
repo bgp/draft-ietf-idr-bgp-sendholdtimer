@@ -116,10 +116,10 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    This specification intends to improve this situation by requiring
    sessions to be terminated if the local system has detected that the
-   remote system has not processed any BGP messages for the duration of
-   the SendHoldTimer.  Through codification of the aforementioned
-   requirement, operators will benefit from consistent behavior across
-   different BGP implementations.
+   remote system cannot possibly have received any BGP messages for the
+   duration of the SendHoldTimer.  Through codification of the
+   aforementioned requirement, operators will benefit from consistent
+   behavior across different BGP implementations.
 
    BGP speakers following this specification do not exclusively rely on
    remote systems robustly closing connections, but will also locally
