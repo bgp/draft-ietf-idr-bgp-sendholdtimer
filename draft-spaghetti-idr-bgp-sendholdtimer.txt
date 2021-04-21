@@ -5,8 +5,8 @@
 IDR                                                          J. Snijders
 Internet-Draft                                                    Fastly
 Updates: 4271 (if approved)                            B. Cartwright-Cox
-Intended status: Standards Track                           20 April 2021
-Expires: 22 October 2021
+Intended status: Standards Track                           21 April 2021
+Expires: 23 October 2021
 
 
            Border Gateway Protocol 4 (BGP-4) Send Hold Timer
@@ -15,12 +15,14 @@ Expires: 22 October 2021
 Abstract
 
    This document defines the SendHoldTimer session attribute for the
-   Border Gateway Protocol (BGP) Finite State Machine (FSM).  A session
-   should be terminated if the TCP receive window is zero for the
-   duration of the Send Hold Timer, in this situation the peer is
-   expected to terminate the connection.  For robustness, this document
-   specifies that the local system should also close the connection.
-   This document updates RFC4271.
+   Border Gateway Protocol (BGP) Finite State Machine (FSM).
+   Implementation of a SendHoldTimer should help overcome situations
+   where BGP sessions are not terminated after it has become detectable
+   for the local system that the remote system is not processing BGP
+   messages.  For robustness, this document specifies that the local
+   system should close BGP connections and not solely rely on the remote
+   system for session tear down when BGP timers have expired.  This
+   document updates RFC4271.
 
 Requirements Language
 
@@ -43,20 +45,23 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 October 2021.
+   This Internet-Draft will expire on 23 October 2021.
+
+
+
+
+
+
+
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 1]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
 
 Copyright Notice
 
    Copyright (c) 2021 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
-
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 1]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
@@ -75,14 +80,14 @@ Table of Contents
      2.2.  SendHoldTimer_Expires Event Definition  . . . . . . . . .   3
    3.  Send Hold Timer Expired Error Handling  . . . . . . . . . . .   4
    4.  Implementation status - RFC EDITOR: REMOVE BEFORE
-           PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   4
+           PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   5
    5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
      8.2.  Informative References  . . . . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -101,24 +106,24 @@ Table of Contents
    Not terminating a stuck BGP session can result in Denial Of Service,
    the subsequent failure to generate and deliver BGP WITHDRAW messages
    to other BGP peers of the local system is detrimental to all
-   participants of the inter-domain routing system.  This phenomena is
-   theorised to have contributed to IP traffic backholing events in
-   global Internet routing system [l3outage]
 
 
 
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 2]
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 2]
 
 Internet-Draft              BGP SendHoldTimer                 April 2021
 
 
+   participants of the inter-domain routing system.  This phenomena is
+   theorised to have contributed to IP traffic backholing events in
+   global Internet routing system [l3outage]
+
    This specification intends to improve this situation by requiring
-   sessions to be terminated if the TCP receive window is zero for the
-   duration of the Send Hold Timer.  Through codification of the
-   aforementioned requirement, operators will benefit from consistent
-   behavior across different BGP implementations.
+   sessions to be terminated if the local system has detected that the
+   remote system has not processed any BGP messages for the duration of
+   the SendHoldTimer.  Through codification of the aforementioned
+   requirement, operators will benefit from consistent behavior across
+   different BGP implementations.
 
    BGP speakers following this specification do not exclusively rely on
    remote systems robustly closing connections, but will also locally
@@ -128,7 +133,7 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    BGP speakers are implemented following a conceptual model "BGP Finite
    State Machine" (FSM), which is outlined in section 8 of [RFC4271].
-   This specification extends the BGP FSM as following:
+   This specification updates the BGP FSM as following:
 
 2.1.  Session Attributes
 
@@ -157,19 +162,19 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
       -  sets the ConnectRetryTimer to zero,
 
+
+
+
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 3]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
+
       -  drops the TCP connection,
 
       -  increments the ConnectRetryCounter,
 
       -  (optionally) performs peer oscillation damping if the
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 3]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
-
          DampPeerOscillations attribute is set to TRUE, and
 
       -  changes its state to Idle.
@@ -209,6 +214,18 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    Hold Time, then the BGP connection is closed and a log message is
    emitted.
 
+
+
+
+
+
+
+
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 4]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
+
 4.  Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION
 
    This section records the status of known implementations of the
@@ -218,14 +235,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    assist the IETF in its decision processes in progressing drafts to
    RFCs.  Please note that the listing of any individual implementation
    here does not imply endorsement by the IETF.  Furthermore, no effort
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 4]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
-
    has been spent to verify the information presented here that was
    supplied by IETF contributors.  This is not intended as, and must not
    be construed to be, a catalog of available implementations or their
@@ -248,8 +257,8 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 5.  Acknowledgements
 
-   The authors would like to thank William McCall for their helpful
-   review of this document.
+   The authors would like to thank William McCall and Theo de Raadt for
+   their helpful review of this document.
 
 6.  Security Considerations
 
@@ -264,6 +273,15 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    *  Failure to send BGP messages to a peer implies the peer is
       operating based on stale routing information.
 
+
+
+
+
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 5]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
+
    *  Failure to disconnect from a 'stuck' peer hinders the local
       system's ability to construct a non-stale local Routing
       Information Base (RIB).
@@ -274,13 +292,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    In other respects, this specification does not change BGP's security
    characteristics.
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 5]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
 7.  IANA Considerations
 
@@ -318,7 +329,14 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
               idUSL2N1CB00C>.
 
    [openbgpd] Jeker, C., "bgpd send side hold timer", December 2020,
-              <https://marc.info/?l=openbsd-tech&m=160796802508185&w=2>.
+              <https://marc.info/?l=openbsd-tech&m=160820754925261&w=2>.
+
+
+
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 6]
+
+Internet-Draft              BGP SendHoldTimer                 April 2021
+
 
    [TCP_USER_TIMEOUT]
               Chen, E., "[Idr] TCP & BGP: Some don't send terminate BGP
@@ -327,16 +345,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
               KOU59BTIvsqv8OHVBIvcVr97fD4/>.
 
 Authors' Addresses
-
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 6]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
    Job Snijders
    Fastly
@@ -381,12 +389,4 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 
 
-
-
-
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 22 October 2021                [Page 7]
+Snijders & Cartwright-CoxExpires 23 October 2021                [Page 7]
