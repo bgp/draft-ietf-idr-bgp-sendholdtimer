@@ -83,9 +83,7 @@ Table of Contents
    4.  Send Hold Timer Expired Error Handling  . . . . . . . . . . .   5
    5.  Implementation status - RFC EDITOR: REMOVE BEFORE
            PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   5
-     5.1.  Tested implementations  . . . . . . . . . . . . . . . . .   5
-     5.2.  Linux Implementation notes  . . . . . . . . . . . . . . .   5
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -105,6 +103,8 @@ Table of Contents
    participants of the inter-domain routing system.  This phenomena is
    theorised to have contributed to IP traffic backholing events in
    global Internet routing system [l3outage]
+
+
 
 
 
@@ -243,8 +243,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 5.  Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION
 
-5.1.  Tested implementations
-
    This section records the status of known implementations of the
    protocol defined by this specification at the time of posting of this
    Internet-Draft, and is based on a proposal described in RFC 7942.
@@ -267,11 +265,13 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    *  OpenBGPD [openbgpd]
 
-5.2.  Linux Implementation notes
+6.  Acknowledgements
 
-   As a result of investigation into the phenomena of 'stuck' BGP
-   routes, the Linux TCP implementation TCP_USER_TIMEOUT option was
-   improved [TCP_USER_TIMEOUT].
+   The authors would like to thank William McCall and Theo de Raadt for
+   their helpful review of this document.
+
+
+
 
 
 
@@ -281,11 +281,6 @@ Snijders & Cartwright-CoxExpires 23 October 2021                [Page 5]
 
 Internet-Draft              BGP SendHoldTimer                 April 2021
 
-
-6.  Acknowledgements
-
-   The authors would like to thank William McCall and Theo de Raadt for
-   their helpful review of this document.
 
 7.  Security Considerations
 
@@ -330,6 +325,11 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
+              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
+              DOI 10.17487/RFC4271, January 2006,
+              <https://www.rfc-editor.org/info/rfc4271>.
+
 
 
 
@@ -337,11 +337,6 @@ Snijders & Cartwright-CoxExpires 23 October 2021                [Page 6]
 
 Internet-Draft              BGP SendHoldTimer                 April 2021
 
-
-   [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
-              Border Gateway Protocol 4 (BGP-4)", RFC 4271,
-              DOI 10.17487/RFC4271, January 2006,
-              <https://www.rfc-editor.org/info/rfc4271>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -356,12 +351,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    [openbgpd] Jeker, C., "bgpd send side hold timer", December 2020,
               <https://marc.info/?l=openbsd-tech&m=160820754925261&w=2>.
-
-   [TCP_USER_TIMEOUT]
-              Chen, E., "[Idr] TCP & BGP: Some don't send terminate BGP
-              when holdtimer expired, because TCP recv window is 0",
-              January 2021, <https://mailarchive.ietf.org/arch/msg/idr/
-              KOU59BTIvsqv8OHVBIvcVr97fD4/>.
 
 Authors' Addresses
 
@@ -378,6 +367,17 @@ Authors' Addresses
    United Kingdom
 
    Email: ben@benjojo.co.uk
+
+
+
+
+
+
+
+
+
+
+
 
 
 

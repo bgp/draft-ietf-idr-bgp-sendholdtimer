@@ -213,35 +213,27 @@
   </section>
 
   <section title="Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION">
-    <section title="Tested implementations">
-      <t>
-        This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in RFC 7942.
-        The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.
-        Please note that the listing of any individual implementation here does not imply endorsement by the IETF.
-        Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.
-        This is not intended as, and must not be construed to be, a catalog of available implementations or their features.
-        Readers are advised to note that other implementations may exist.
-      </t>
+    <t>
+      This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in RFC 7942.
+      The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.
+      Please note that the listing of any individual implementation here does not imply endorsement by the IETF.
+      Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.
+      This is not intended as, and must not be construed to be, a catalog of available implementations or their features.
+      Readers are advised to note that other implementations may exist.
+    </t>
 
-      <t>
-        According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
-        It is up to the individual working groups to use this information as they see fit".
-      </t>
+    <t>
+      According to RFC 7942, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.
+      It is up to the individual working groups to use this information as they see fit".
+    </t>
 
-      <t>
-        <list style="symbols">
-          <t>
-            OpenBGPD <xref target="openbgpd"/>
-          </t>
-        </list>
-      </t>
-    </section>
-
-    <section title="Linux Implementation notes">
-      <t>
-        As a result of investigation into the phenomena of 'stuck' BGP routes, the Linux TCP implementation TCP_USER_TIMEOUT option was improved <xref target="TCP_USER_TIMEOUT"/>.
-      </t>
-    </section>
+    <t>
+      <list style="symbols">
+        <t>
+          OpenBGPD <xref target="openbgpd"/>
+        </t>
+      </list>
+    </t>
   </section>
 
   <section title="Acknowledgements">
@@ -311,14 +303,6 @@
         <title>bgpd send side hold timer</title>
         <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
         <date month="December" year="2020" />
-      </front>
-    </reference>
-
-    <reference anchor="TCP_USER_TIMEOUT" target="https://mailarchive.ietf.org/arch/msg/idr/KOU59BTIvsqv8OHVBIvcVr97fD4/">
-      <front>
-        <title>[Idr] TCP &amp; BGP: Some don't send terminate BGP when holdtimer expired, because TCP recv window is 0</title>
-        <author fullname="Enke Chen"><organization>Paolo Alto Networks</organization></author>
-        <date month="January" year="2021" />
       </front>
     </reference>
 
