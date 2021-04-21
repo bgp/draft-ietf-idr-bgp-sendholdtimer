@@ -236,7 +236,8 @@
     </t>
 
     <t>
-       While not a BGP implementation, as a result of investigation into the phenomena of stuck BGP routes, the Linux TCP implementation TCP_USER_TIMEOUT option was improved, allowing easier termination of TCP sessions which are not progressing data <xref target="TCP_USER_TIMEOUT"/>.
+      As a result of investigation into the phenomena of 'stuck' BGP routes, the Linux TCP implementation TCP_USER_TIMEOUT option was improved <xref target="TCP_USER_TIMEOUT"/>.
+      The revised TCP_USER_TIMEOUT option might be helpful when implementing BGP SendHoldTimer functionality.
     </t>
   </section>
 
