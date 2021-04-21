@@ -103,7 +103,7 @@
     </t>
     <t>
       Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
-      Therefor this document banks on BGP implementations being able to detect an inability to push more data to the remote peer.
+      Therefor this document banks on BGP implementations being able to detect an inability to push more data to the remote peer, at which point the SendHoldTimer starts.
     </t>
   </section>
 
