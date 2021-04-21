@@ -142,7 +142,8 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    Generally BGP implementation have no visibility into lower-layer
    subsystems such as TCP or the peer's current Receive Window.
    Therefor this document banks on BGP implementations being able to
-   detect an inability to push more data to the remote peer.
+   detect an inability to push more data to the remote peer, at which
+   point the SendHoldTimer starts.
 
 3.  Specification of the Send Hold Timer
 
@@ -159,7 +160,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
       9) SendHoldTimer
 
       10) SendHoldTime (an initial value of 4 minutes is recommended)
-
 
 
 

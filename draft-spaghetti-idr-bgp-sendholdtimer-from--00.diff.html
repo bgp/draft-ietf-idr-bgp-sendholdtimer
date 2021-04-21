@@ -227,7 +227,8 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   Generally BGP implementation have no visibility into lower-layer</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   subsystems such as TCP or the peer's current Receive Window.</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   Therefor this document banks on BGP implementations being able to</span></td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   detect an inability to push more data to the remote peer.</span></td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   detect an inability to push more data to the remote peer, at which</span></td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">   point the SendHoldTimer starts.</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">                                                                         </span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">3.  Specification of the Send Hold Timer</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"></td><td> </td><td class="rblock"><span class="insert">                                                                         </span></td><td class="lineno"></td></tr>
@@ -433,7 +434,7 @@ document.onkeydown = function(e) {
 
      <tr><td></td><td class="left"></td><td> </td><td class="right"></td><td></td></tr>
      <tr id="end" bgcolor="gray"><th colspan="5" align="center">&nbsp;End of changes. 29 change blocks.&nbsp;</th></tr>
-     <tr class="stats"><td></td><th><i>64 lines changed or deleted</i></th><th><i> </i></th><th><i>80 lines changed or added</i></th><td></td></tr>
+     <tr class="stats"><td></td><th><i>64 lines changed or deleted</i></th><th><i> </i></th><th><i>81 lines changed or added</i></th><td></td></tr>
      <tr><td colspan="5" align="center" class="small"><br/>This html diff was produced by rfcdiff 1.46. The latest version is available from <a href="http://www.tools.ietf.org/tools/rfcdiff/" >http://tools.ietf.org/tools/rfcdiff/</a> </td></tr>
    </table>
    </body>
