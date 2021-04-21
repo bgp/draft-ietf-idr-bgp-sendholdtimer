@@ -102,7 +102,7 @@ Table of Contents
    messages to other BGP peers of the local system is detrimental to all
    participants of the inter-domain routing system.  This phenomena is
    theorised to have contributed to IP traffic backholing events in
-   global Internet routing system [l3outage]
+   global Internet routing system.
 
 
 
@@ -344,11 +344,6 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 9.2.  Informative References
 
-   [l3outage] Reuters, "Level 3 problem sparks temporary outage for some
-              U.S. telecomms", August 2020,
-              <https://www.reuters.com/article/level-3-communi-outages-
-              idUSL2N1CB00C>.
-
    [openbgpd] Jeker, C., "bgpd send side hold timer", December 2020,
               <https://marc.info/?l=openbsd-tech&m=160820754925261&w=2>.
 
@@ -367,6 +362,11 @@ Authors' Addresses
    United Kingdom
 
    Email: ben@benjojo.co.uk
+
+
+
+
+
 
 
 
