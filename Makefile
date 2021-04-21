@@ -6,8 +6,13 @@
 # Your nroff document is called foo.txt. Change below as appropiate.
 NAME=draft-spaghetti-idr-bgp-sendholdtimer
 
+LAST_UPLOADED=00
+
 all: $(NAME).xml
 	xml2rfc $(NAME).xml --html --text
+
+diff:
+	rfcdiff draft-spaghetti-idr-bgp-sendholdtimer-$(LAST_UPLOADED).txt draft-spaghetti-idr-bgp-sendholdtimer.txt
 
 clean:
 	rm -f *.html *.txt
