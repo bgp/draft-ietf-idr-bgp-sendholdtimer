@@ -83,7 +83,7 @@
 
     <t>
       Failure to terminate a 'stuck' BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
-      This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="l3outage"/>
+      This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system. <!-- here a reference to [EMILE2021] can be added if that paper is accepted -->
     </t>
     <t>
       This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTimer.
@@ -289,14 +289,6 @@
   </references>
 
   <references title="Informative References">
-
-    <reference anchor="l3outage" target="https://www.reuters.com/article/level-3-communi-outages-idUSL2N1CB00C">
-      <front>
-        <title>Level 3 problem sparks temporary outage for some U.S. telecomms</title>
-        <author><organization>Reuters</organization></author>
-        <date month="August" year="2020"/>
-      </front>
-    </reference>
 
     <reference anchor="openbgpd" target="https://marc.info/?l=openbsd-tech&amp;m=160820754925261&amp;w=2">
       <front>
