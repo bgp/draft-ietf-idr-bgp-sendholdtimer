@@ -10,7 +10,7 @@ Expires: 23 October 2021
 
 
            Border Gateway Protocol 4 (BGP-4) Send Hold Timer
-                draft-spaghetti-idr-bgp-sendholdtimer-01
+                draft-spaghetti-idr-bgp-sendholdtimer-02
 
 Abstract
 
