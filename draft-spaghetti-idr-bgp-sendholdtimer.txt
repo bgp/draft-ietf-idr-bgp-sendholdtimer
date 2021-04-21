@@ -128,7 +128,7 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 2.  Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE
     PUBLICATION
 
-   A malfuctioning or overwhelmed peer may cause data on the BGP socket
+   A malfunctioning or overwhelmed peer may cause data on the BGP socket
    in the local system to back up, and the current RFC specification
    will not cause the session to be torn down.  For example, as BGP runs
    over TCP [RFC0793] it is possible for hosts in the ESTABLISHED state
