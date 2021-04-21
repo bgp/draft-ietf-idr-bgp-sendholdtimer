@@ -12,7 +12,7 @@
 
 <rfc
   category="std"
-  docName="draft-spaghetti-idr-bgp-sendholdtimer-00"
+  docName="draft-spaghetti-idr-bgp-sendholdtimer-01"
   updates="4271"
   ipr="trust200902">
   
@@ -82,11 +82,7 @@
     </t>
 
     <t>
-      As BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
-      At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.
-    </t>
-    <t>
-      Not terminating a stuck BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="l3outage"/>
     </t>
     <t>
@@ -99,8 +95,15 @@
 
   </section>
 
-  <section title="Specification of the Send Hold Timer">
+  <section title="Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE PUBLICATION">
+    <t>
+      A malfuctioning or overwhelmed peer may cause data on the BGP socket in the local system to back up, and the current RFC specification will not cause the session to be torn down.
+      For example, as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
+      At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.
+    </t>
+  </section>
 
+  <section title="Specification of the Send Hold Timer">
   <!-- todo:
    
      rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
@@ -182,6 +185,7 @@
       <t hangText="-">completes BGP initialization</t>
       <t hangText="-">sends an OPEN message to its peer,</t>
       <t hangText="-">sets the HoldTimer to a large value, and</t>
+      <t hangText="-">sets the SendHoldTimer to a large value, and</t>
       <t hangText="-">changes its state to OpenSent.</t>
           </list>
         </t>
