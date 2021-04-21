@@ -10,6 +10,7 @@ LAST_UPLOADED=00
 
 all: $(NAME).xml
 	xml2rfc $(NAME).xml --html --text
+	rfcdiff draft-spaghetti-idr-bgp-sendholdtimer-$(LAST_UPLOADED).txt draft-spaghetti-idr-bgp-sendholdtimer.txt
 
 diff:
 	rfcdiff draft-spaghetti-idr-bgp-sendholdtimer-$(LAST_UPLOADED).txt draft-spaghetti-idr-bgp-sendholdtimer.txt

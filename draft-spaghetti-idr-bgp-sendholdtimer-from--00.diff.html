@@ -336,19 +336,20 @@ document.onkeydown = function(e) {
       <tr id="diff0017"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   <span class="delete">o</span>  OpenBGPD [openbgpd]</td><td> </td><td class="rblock">   <span class="insert">*</span>  OpenBGPD [openbgpd]</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   While not a BGP implementation, as a result of investigation into</td><td> </td><td class="right">   While not a BGP implementation, as a result of investigation into</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option</td><td> </td><td class="right">   this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   was improved, allowing easier termination of TCP sessions which are</td><td> </td><td class="right">   was improved, allowing easier termination of TCP sessions which are</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left">   not progressing data [TCP_USER_TIMEOUT].</td><td> </td><td class="right">   not progressing data [TCP_USER_TIMEOUT].</td><td class="lineno"></td></tr>
-      <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr id="diff0018"><td></td></tr>
-      <tr><td class="lineno"></td><td class="lblock"><span class="delete">5</span>.  Acknowledgements</td><td> </td><td class="rblock"><span class="insert">6</span>.  Acknowledgements</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   While not a BGP implementation, as a result of investigation into</td><td> </td><td class="rblock">   While not a BGP implementation, as a result of investigation into<span class="insert"> the</span></td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   <span class="delete">this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT op</span>tion</td><td> </td><td class="rblock">   <span class="insert">phenomena of stuck BGP routes, the Linux TCP implementa</span>tion</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   <span class="delete">was improved, allowing easier termination of TCP sessions which are</span></td><td> </td><td class="rblock">   <span class="insert">TCP_USER_TIMEOUT option was improved, allowing easier termination of</span></td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="lblock">   not progressing data [TCP_USER_TIMEOUT].</td><td> </td><td class="rblock">   <span class="insert">TCP sessions which are </span>not progressing data [TCP_USER_TIMEOUT].</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr id="diff0019"><td></td></tr>
+      <tr><td class="lineno"></td><td class="lblock"><span class="delete">5</span>.  Acknowledgements</td><td> </td><td class="rblock"><span class="insert">6</span>.  Acknowledgements</td><td class="lineno"></td></tr>
+      <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
+      <tr id="diff0020"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   The authors would like to thank William McCall <span class="delete">for their helpful</span></td><td> </td><td class="rblock">   The authors would like to thank William McCall <span class="insert">and Theo de Raadt for</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   review of this document.</td><td> </td><td class="rblock">   <span class="insert">their helpful </span>review of this document.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0020"><td></td></tr>
+      <tr id="diff0021"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">6</span>.  Security Considerations</td><td> </td><td class="rblock"><span class="insert">7</span>.  Security Considerations</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   This specification addresses the vulnerability of a BGP speaker to a</td><td> </td><td class="right">   This specification addresses the vulnerability of a BGP speaker to a</td><td class="lineno"></td></tr>
@@ -359,16 +360,16 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="left">   There are three detrimental aspects to the problem of not robustly</td><td> </td><td class="right">   There are three detrimental aspects to the problem of not robustly</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   handling 'stuck' peers:</td><td> </td><td class="right">   handling 'stuck' peers:</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0021"><td></td></tr>
+      <tr id="diff0022"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   <span class="delete"> </span>  Failure to send BGP messages to a peer implies the peer is</td><td> </td><td class="rblock">   <span class="insert">*</span>  Failure to send BGP messages to a peer implies the peer is</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">      operating based on stale routing information.</td><td> </td><td class="right">      operating based on stale routing information.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0022"><td></td></tr>
+      <tr id="diff0023"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   <span class="delete"> </span>  Failure to disconnect from a 'stuck' peer hinders the local</td><td> </td><td class="rblock">   <span class="insert">*</span>  Failure to disconnect from a 'stuck' peer hinders the local</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">      system's ability to construct a non-stale local Routing</td><td> </td><td class="right">      system's ability to construct a non-stale local Routing</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">      Information Base (RIB).</td><td> </td><td class="right">      Information Base (RIB).</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0023"><td></td></tr>
+      <tr id="diff0024"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   <span class="delete"> </span>  Failure to disconnect from a 'stuck' peer hinders the local</td><td> </td><td class="rblock">   <span class="insert">*</span>  Failure to disconnect from a 'stuck' peer hinders the local</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">      system's ability to inform other BGP peers with current network</td><td> </td><td class="right">      system's ability to inform other BGP peers with current network</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">      reachability information.</td><td> </td><td class="right">      reachability information.</td><td class="lineno"></td></tr>
@@ -376,17 +377,17 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="left">   In other respects, this specification does not change BGP's security</td><td> </td><td class="right">   In other respects, this specification does not change BGP's security</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   characteristics.</td><td> </td><td class="right">   characteristics.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0024"><td></td></tr>
+      <tr id="diff0025"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">7</span>.  IANA Considerations</td><td> </td><td class="rblock"><span class="insert">8</span>.  IANA Considerations</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   This document requests IANA to assign a value named "Send Hold Timer</td><td> </td><td class="right">   This document requests IANA to assign a value named "Send Hold Timer</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   Expired" in the "BGP Error (Notification) Codes" sub-registry under</td><td> </td><td class="right">   Expired" in the "BGP Error (Notification) Codes" sub-registry under</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   the "Border Gateway Protocol (BGP) Parameters" registry.</td><td> </td><td class="right">   the "Border Gateway Protocol (BGP) Parameters" registry.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0025"><td></td></tr>
+      <tr id="diff0026"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">8</span>.  References</td><td> </td><td class="rblock"><span class="insert">9</span>.  References</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0026"><td></td></tr>
+      <tr id="diff0027"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">8</span>.1.  Normative References</td><td> </td><td class="rblock"><span class="insert">9</span>.1.  Normative References</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">   [RFC0793]  Postel, J., "Transmission Control Protocol", STD 7,</td><td> </td><td class="right">   [RFC0793]  Postel, J., "Transmission Control Protocol", STD 7,</td><td class="lineno"></td></tr>
@@ -407,17 +408,17 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="left">              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,</td><td> </td><td class="right">              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">              May 2017, &lt;https://www.rfc-editor.org/info/rfc8174&gt;.</td><td> </td><td class="right">              May 2017, &lt;https://www.rfc-editor.org/info/rfc8174&gt;.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0027"><td></td></tr>
+      <tr id="diff0028"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">8</span>.2.  Informative References</td><td> </td><td class="rblock"><span class="insert">9</span>.2.  Informative References</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0028"><td></td></tr>
+      <tr id="diff0029"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   [l3outage]</td><td> </td><td class="rblock">   [l3outage]<span class="insert"> Reuters, "Level 3 problem sparks temporary outage for some</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">              Reuters, "Level 3 problem sparks temporary outage for some</span></td><td> </td><td class="rblock"></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">              U.S. telecomms", August 2020,</td><td> </td><td class="right">              U.S. telecomms", August 2020,</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">              &lt;https://www.reuters.com/article/level-3-communi-outages-</td><td> </td><td class="right">              &lt;https://www.reuters.com/article/level-3-communi-outages-</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left">              idUSL2N1CB00C&gt;.</td><td> </td><td class="right">              idUSL2N1CB00C&gt;.</td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="left"></td><td> </td><td class="right"></td><td class="lineno"></td></tr>
-      <tr id="diff0029"><td></td></tr>
+      <tr id="diff0030"><td></td></tr>
       <tr><td class="lineno"></td><td class="lblock">   [openbgpd]</td><td> </td><td class="rblock">   [openbgpd]<span class="insert"> Jeker, C., "bgpd send side hold timer", December 2020,</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock">              <span class="delete">Jeker, C., "bgpd send side hold timer", December 2020,</span></td><td> </td><td class="rblock">              <span class="insert">&lt;https://marc.info/?l=openbsd-tech&amp;m=160820754925261&amp;w=2&gt;.</span></td><td class="lineno"></td></tr>
       <tr><td class="lineno"></td><td class="lblock"><span class="delete">              &lt;https://marc.info/?l=openbsd-tech&amp;m=160796802508185&amp;w=2&gt;.</span></td><td> </td><td class="rblock"></td><td class="lineno"></td></tr>
@@ -433,8 +434,8 @@ document.onkeydown = function(e) {
       <tr><td class="lineno"></td><td class="left">   Job Snijders</td><td> </td><td class="right">   Job Snijders</td><td class="lineno"></td></tr>
 
      <tr><td></td><td class="left"></td><td> </td><td class="right"></td><td></td></tr>
-     <tr id="end" bgcolor="gray"><th colspan="5" align="center">&nbsp;End of changes. 29 change blocks.&nbsp;</th></tr>
-     <tr class="stats"><td></td><th><i>64 lines changed or deleted</i></th><th><i> </i></th><th><i>81 lines changed or added</i></th><td></td></tr>
+     <tr id="end" bgcolor="gray"><th colspan="5" align="center">&nbsp;End of changes. 30 change blocks.&nbsp;</th></tr>
+     <tr class="stats"><td></td><th><i>68 lines changed or deleted</i></th><th><i> </i></th><th><i>85 lines changed or added</i></th><td></td></tr>
      <tr><td colspan="5" align="center" class="small"><br/>This html diff was produced by rfcdiff 1.46. The latest version is available from <a href="http://www.tools.ietf.org/tools/rfcdiff/" >http://tools.ietf.org/tools/rfcdiff/</a> </td></tr>
    </table>
    </body>

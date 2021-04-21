@@ -265,10 +265,10 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    *  OpenBGPD [openbgpd]
 
-   While not a BGP implementation, as a result of investigation into
-   this phenomena, the Linux TCP implementation TCP_USER_TIMEOUT option
-   was improved, allowing easier termination of TCP sessions which are
-   not progressing data [TCP_USER_TIMEOUT].
+   While not a BGP implementation, as a result of investigation into the
+   phenomena of stuck BGP routes, the Linux TCP implementation
+   TCP_USER_TIMEOUT option was improved, allowing easier termination of
+   TCP sessions which are not progressing data [TCP_USER_TIMEOUT].
 
 6.  Acknowledgements
 
