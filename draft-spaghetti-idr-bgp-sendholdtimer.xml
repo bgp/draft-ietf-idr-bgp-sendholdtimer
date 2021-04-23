@@ -15,9 +15,9 @@
   docName="draft-spaghetti-idr-bgp-sendholdtimer-02"
   updates="4271"
   ipr="trust200902">
-  
+
 <front>
-    
+
   <title abbrev="BGP SendHoldTimer">Border Gateway Protocol 4 (BGP-4) Send Hold Timer</title>
 
   <author fullname="Job Snijders" initials="J." surname="Snijders">
@@ -74,7 +74,7 @@
 </front>
 
 <middle>
-  
+ 
   <section title="Introduction">
 
     <t>
@@ -83,7 +83,7 @@
 
     <t>
       Failure to terminate a 'stuck' BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
-      This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system. <!-- here a reference to [EMILE2021] can be added if that paper is accepted -->
+      This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
       This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTimer.
@@ -109,13 +109,13 @@
 
   <section title="Specification of the Send Hold Timer">
   <!-- todo:
-   
+ 
      rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
      rfc 4271 section 6.* - Send Hold Timer Expired Error Handling
      rfc 4271 section 8.1.1 - event
      rfc 4271 section 8.1.3 - timer
      rfc 4271 section 8.2.1.4 - fsm event numbers?
-    --> 
+    -->
 
   <t>
     BGP speakers are implemented following a conceptual model "BGP Finite State Machine" (FSM), which is outlined in section 8 of <xref target="RFC4271"/>.
@@ -123,16 +123,16 @@
   </t>
 
   <section title="Session Attributes">
-    <t> 
+    <t>
       The following mandatory session attributes are added to paragraph 6 of Section 8, before "The state session attribute indicates the current state of the BGP FSM":
     </t>
 
     <t>
       <list style="empty">
-        <t> 
+        <t>
           9) SendHoldTimer
         </t>
-        <t> 
+        <t>
           10) SendHoldTime (an initial value of 4 minutes is recommended)
         </t>
       </list>
@@ -145,7 +145,7 @@
   </t>
 
 <figure><artwork>
-    Event XX: SendHoldTimer_Expires 
+    Event XX: SendHoldTimer_Expires
     Definition : An event generated when the SendHoldTimer expires.
     Status: Mandatory
 </artwork></figure>
@@ -295,6 +295,14 @@
         <title>bgpd send side hold timer</title>
         <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
         <date month="December" year="2020" />
+      </front>
+    </reference>
+
+    <reference anchor="bgpzombies" target="https://labs.ripe.net/author/romain_fontugne/bgp-zombies/">
+      <front>
+        <title>BGP Zombies</title>
+        <author fullname="Romain Fontugne"><organization>IIJ Research Lab</organization></author>
+        <date month="april" year="2019" />
       </front>
     </reference>
 
