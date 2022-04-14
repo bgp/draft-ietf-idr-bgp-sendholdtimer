@@ -5,12 +5,12 @@
 IDR                                                          J. Snijders
 Internet-Draft                                                    Fastly
 Updates: 4271 (if approved)                            B. Cartwright-Cox
-Intended status: Standards Track                           23 April 2021
-Expires: 25 October 2021
+Intended status: Standards Track                          April 14, 2022
+Expires: October 16, 2022
 
 
            Border Gateway Protocol 4 (BGP-4) Send Hold Timer
-                draft-spaghetti-idr-bgp-sendholdtimer-02
+                draft-spaghetti-idr-bgp-sendholdtimer-04
 
 Abstract
 
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 October 2021.
+   This Internet-Draft will expire on October 16, 2022.
 
 
 
@@ -53,37 +53,37 @@ Status of This Memo
 
 
 
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 1]
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 1]
 
-Internet-Draft              BGP SendHoldTimer                 April 2021
+Internet-Draft              BGP SendHoldTimer                 April 2022
 
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents (https://trustee.ietf.org/
-   license-info) in effect on the date of publication of this document.
-   Please review these documents carefully, as they describe your rights
-   and restrictions with respect to this document.  Code Components
-   extracted from this document must include Simplified BSD License text
-   as described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Simplified BSD License.
+   Provisions Relating to IETF Documents
+   (https://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
 
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE
-           PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   3
+       PUBLICATION . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Specification of the Send Hold Timer  . . . . . . . . . . . .   3
      3.1.  Session Attributes  . . . . . . . . . . . . . . . . . . .   3
      3.2.  SendHoldTimer_Expires Event Definition  . . . . . . . . .   4
    4.  Send Hold Timer Expired Error Handling  . . . . . . . . . . .   5
-   5.  Implementation status - RFC EDITOR: REMOVE BEFORE
-           PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   5
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
+   5.  Implementation status - RFC EDITOR: REMOVE BEFORE PUBLICATION   5
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -104,18 +104,16 @@ Table of Contents
    theorised to have contributed to IP traffic backholing events in
    global Internet routing system [bgpzombies].
 
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 2]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
-
    This specification intends to improve this situation by requiring
    sessions to be terminated if the local system has detected that the
+
+
+
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 2]
+
+Internet-Draft              BGP SendHoldTimer                 April 2022
+
+
    remote system cannot possibly have received any BGP messages for the
    duration of the SendHoldTimer.  Through codification of the
    aforementioned requirement, operators will benefit from consistent
@@ -165,9 +163,11 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
 
 
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 3]
+
+
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 3]
 
-Internet-Draft              BGP SendHoldTimer                 April 2021
+Internet-Draft              BGP SendHoldTimer                 April 2022
 
 
 3.2.  SendHoldTimer_Expires Event Definition
@@ -179,6 +179,8 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
        Status: Mandatory
 
    If the SendHoldTimer_Expires (Event XX), the local system:
+
+
 
       -  logs a message with the BGP Error Notification Code "Send Hold
          Timer Expired",
@@ -199,6 +201,8 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    If the DelayOpenTimer_Expires event (Event 12) occurs in the Connect
    state, the local system:
 
+
+
       -  sends an OPEN message to its peer,
 
       -  sets the HoldTimer to a large value, and
@@ -209,22 +213,24 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 
    If the DelayOpen attribute is set to FALSE, the local system:
 
+
+
       -  stops the ConnectRetryTimer (if running) and sets the
          ConnectRetryTimer to zero,
+
+
+
+
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 4]
+
+Internet-Draft              BGP SendHoldTimer                 April 2022
+
 
       -  completes BGP initialization
 
       -  sends an OPEN message to its peer,
 
       -  sets the HoldTimer to a large value, and
-
-
-
-
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 4]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
       -  sets the SendHoldTimer to a large value, and
 
@@ -263,24 +269,23 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    It is up to the individual working groups to use this information as
    they see fit".
 
-   *  OpenBGPD [openbgpd]
+   o  OpenBGPD [openbgpd]
+
+
+
+
+
+
+
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 5]
+
+Internet-Draft              BGP SendHoldTimer                 April 2022
+
 
 6.  Acknowledgements
 
    The authors would like to thank William McCall and Theo de Raadt for
    their helpful review of this document.
-
-
-
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 5]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
 7.  Security Considerations
 
@@ -292,14 +297,14 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
    There are three detrimental aspects to the problem of not robustly
    handling 'stuck' peers:
 
-   *  Failure to send BGP messages to a peer implies the peer is
+      Failure to send BGP messages to a peer implies the peer is
       operating based on stale routing information.
 
-   *  Failure to disconnect from a 'stuck' peer hinders the local
+      Failure to disconnect from a 'stuck' peer hinders the local
       system's ability to construct a non-stale local Routing
       Information Base (RIB).
 
-   *  Failure to disconnect from a 'stuck' peer hinders the local
+      Failure to disconnect from a 'stuck' peer hinders the local
       system's ability to inform other BGP peers with current network
       reachability information.
 
@@ -325,18 +330,18 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 6]
+
+Internet-Draft              BGP SendHoldTimer                 April 2022
+
+
    [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
               DOI 10.17487/RFC4271, January 2006,
               <https://www.rfc-editor.org/info/rfc4271>.
-
-
-
-
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 6]
-
-Internet-Draft              BGP SendHoldTimer                 April 2021
-
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -345,11 +350,12 @@ Internet-Draft              BGP SendHoldTimer                 April 2021
 9.2.  Informative References
 
    [bgpzombies]
-              Fontugne, R., "BGP Zombies", April 2019,
+              Fontugne, R., "BGP Zombies", april 2019,
               <https://labs.ripe.net/author/romain_fontugne/bgp-
               zombies/>.
 
-   [openbgpd] Jeker, C., "bgpd send side hold timer", December 2020,
+   [openbgpd]
+              Jeker, C., "bgpd send side hold timer", December 2020,
               <https://marc.info/?l=openbsd-tech&m=160820754925261&w=2>.
 
 Authors' Addresses
@@ -383,10 +389,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-Snijders & Cartwright-CoxExpires 25 October 2021                [Page 7]
+Snijders & Cartwright-CoExpires October 16, 2022                [Page 7]
