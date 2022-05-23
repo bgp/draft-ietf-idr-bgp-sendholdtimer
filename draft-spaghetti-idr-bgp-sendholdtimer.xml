@@ -12,7 +12,7 @@
 
 <rfc
   category="std"
-  docName="draft-spaghetti-idr-bgp-sendholdtimer-04"
+  docName="draft-spaghetti-idr-bgp-sendholdtimer-05"
   updates="4271"
   ipr="trust200902">
 
@@ -233,6 +233,11 @@
           OpenBGPD <xref target="openbgpd"/>
         </t>
       </list>
+      <list style="symbols">
+        <t>
+          FRRouting <xref target="frr"/>
+        </t>
+      </list>
     </t>
   </section>
 
@@ -295,6 +300,14 @@
         <title>bgpd send side hold timer</title>
         <author fullname="Claudio Jeker"><organization>OpenBSD</organization></author>
         <date month="December" year="2020" />
+      </front>
+    </reference>
+
+    <reference anchor="frr" target="https://github.com/FRRouting/frr/pull/11225">
+      <front>
+        <title>bgpd: implement SendHoldTimer</title>
+        <author fullname="David Lamparter"><organization>NetDEF</organization></author>
+        <date month="May" year="2022" />
       </front>
     </reference>
 
