@@ -95,15 +95,17 @@
 
   </section>
 
-  <section title="Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE PUBLICATION">
+  <section title="Example of a problematic scenario">
     <t>
-      A malfunctioning or overwhelmed peer may cause data on the BGP socket in the local system to back up, and the current RFC specification will not cause the session to be torn down.
-      For example, as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
-      At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.
+      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to pile up ad infinitum.
+      This could result in loss of IP traffic, as the overwhelmed peer is not aware of changes to the routing system, and the local system might forward packets based on stale routin g data.
+      An example fault state: as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical messages across the network socket to the remote peer.
+      Historically, many BGP implementations were unable to handle this situation in a robust fashion.
+      Previous BGP RFC specifications would not give cause for the session to be torn down in such situations.
     </t>
     <t>
       Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
-      Therefor this document banks on BGP implementations being able to detect an inability to push more data to the remote peer, at which point the SendHoldTimer starts.
+      Therefor this document banks on BGP implementations having some kind of ability to detect whether they can push data to the remote peer.
     </t>
   </section>
 
