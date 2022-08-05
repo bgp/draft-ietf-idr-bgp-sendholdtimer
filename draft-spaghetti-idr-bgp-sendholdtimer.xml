@@ -97,9 +97,9 @@
 
   <section title="Example of a problematic scenario">
     <t>
-      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to pile up ad infinitum.
-      This could result in loss of IP traffic, as the overwhelmed peer is not aware of changes to the routing system, and the local system might forward packets based on stale routin g data.
-      An example fault state: as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical messages across the network socket to the remote peer.
+      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to accumulate ad infinitum.
+      This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
+      An example fault state: as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
       Historically, many BGP implementations were unable to handle this situation in a robust fashion.
       Previous BGP RFC specifications would not give cause for the session to be torn down in such situations.
     </t>
@@ -246,9 +246,10 @@
   <section title="Acknowledgements">
     <t>
       The authors would like to thank
-      William McCall
-      and
+      William McCall,
       Theo de Raadt
+      and
+      John Heasley
       for their helpful review of this document.
     </t>
   </section>
