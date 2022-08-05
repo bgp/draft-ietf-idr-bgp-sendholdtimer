@@ -105,7 +105,7 @@
     </t>
     <t>
       Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
-      Therefor this document banks on BGP implementations having some kind of ability to detect whether they can push data to the remote peer.
+      Therefore, this document relies upon BGP implementations having the ability to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
     </t>
   </section>
 
