@@ -100,6 +100,8 @@
     <t>
       In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to accumulate ad infinitum.
       This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
+    </t>
+    <t>
       An example fault state: as BGP runs over TCP <xref target="RFC0793" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
       Historically, many BGP implementations were unable to handle this situation in a robust fashion.
       Previous BGP RFC specifications would not give cause for the session to be torn down in such situations.
