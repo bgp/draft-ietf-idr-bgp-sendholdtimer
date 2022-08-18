@@ -135,7 +135,7 @@
           9) SendHoldTimer
         </t>
         <t>
-          10) SendHoldTime (an initial value of 4 minutes is recommended)
+          10) SendHoldTime (an initial value of 8 minutes is recommended)
         </t>
       </list>
     </t>
@@ -202,7 +202,7 @@
       A HoldTimer value of 4 minutes is suggested.
     </t>
     <t>
-      A SendHoldTimer value of 4 minutes is suggested.
+      A SendHoldTimer value of 8 minutes is suggested.
     </t>
 
   </section>
