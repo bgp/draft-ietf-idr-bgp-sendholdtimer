@@ -34,7 +34,7 @@
   </author>
 
   <author fullname="Ben Cartwright-Cox" initials="B." surname="Cartwright-Cox">
-    <organization></organization>
+    <organization>Port 179 Ltd</organization>
     <address>
       <postal>
         <street />
@@ -300,6 +300,14 @@
       </front>
     </reference>
 
+    <reference anchor="neo-bgp" target="https://bgp.tools/kb/bgp-support">
+      <front>
+        <title>What does bgp.tools support</title>
+        <author fullname="Ben Cartwright-Cox"><organization>Port 179 Ltd</organization></author>
+        <date month="Aug" year="2022" />
+      </front>
+    </reference>
+
     <reference anchor="bgpzombies" target="https://labs.ripe.net/author/romain_fontugne/bgp-zombies/">
       <front>
         <title>BGP Zombies</title>
@@ -336,6 +344,12 @@
           FRRouting <xref target="frr"/>
         </t>
       </list>
+      <list style="symbols">
+        <t>
+          neo-bgp (bgp.tools) <xref target="neo-bgp"/>
+        </t>
+      </list>
+
     </t>
   </section>
 
