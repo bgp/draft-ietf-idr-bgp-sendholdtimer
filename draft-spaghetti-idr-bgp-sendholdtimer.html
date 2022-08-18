@@ -11,24 +11,34 @@
        
       This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
       Implementation of a SendHoldTimer should help overcome situations where BGP sessions are not terminated after it has become detectable for the local system that the remote system is not processing BGP messages.
-      For robustness, this document specifies that the local system should close BGP connections and not solely rely on the remote system for session tear down when BGP timers have expired.
+      For robustness, this document specifies that the local system should close BGP connections and not solely rely on the remote system for session closure when BGP timers have expired.
       This document updates RFC4271.
        
     " name="description">
-<meta content="xml2rfc 3.11.1" name="generator">
+<meta content="xml2rfc 3.13.0" name="generator">
 <meta content="BGP" name="keyword">
 <meta content="session" name="keyword">
 <meta content="TCP" name="keyword">
 <meta content="EBGP" name="keyword">
-<meta content="draft-spaghetti-idr-bgp-sendholdtimer-05" name="ietf.draft">
+<meta content="draft-spaghetti-idr-bgp-sendholdtimer-06" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.11.1
-    Python 3.9.12
+  xml2rfc 3.13.0
+    Python 3.9.13
+    appdirs 1.4.4
+    ConfigArgParse 1.5.3
+    google-i18n-address 2.5.2
+    html5lib 1.1
     intervaltree 3.1.0
-    lxml 4.8.0
+    Jinja2 3.1.2
+    kitchen 1.2.6
+    lxml 4.9.0
+    MarkupSafe 2.1.1
     pycairo 1.21.0
+    pycountry 22.3.5
     pyflakes 2.4.0
+    PyYAML 6.0
     requests 2.27.1
+    setuptools 57.4.0
     six 1.16.0
 -->
 <link href="draft-spaghetti-idr-bgp-sendholdtimer.xml" rel="alternate" type="application/rfc+xml">
@@ -172,10 +182,6 @@ svg {
 }
 .alignCenter > *:first-child {
   border: none;
-  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
-     support flexbox yet.
-  */
-  display: table;
   margin: 0 auto;
 }
 
@@ -654,6 +660,9 @@ hr.addr {
   }
   figure {
     overflow: scroll;
+  }
+  pre.breakable {
+    break-inside: auto;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
@@ -1186,11 +1195,11 @@ li > p:last-of-type {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">BGP SendHoldTimer</td>
-<td class="right">May 2022</td>
+<td class="right">August 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Snijders &amp; Cartwright-Cox</td>
-<td class="center">Expires 24 November 2022</td>
+<td class="center">Expires 19 February 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1200,18 +1209,18 @@ li > p:last-of-type {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">IDR</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-spaghetti-idr-bgp-sendholdtimer-05</dd>
+<dd class="internet-draft">draft-spaghetti-idr-bgp-sendholdtimer-06</dd>
 <dt class="label-updates">Updates:</dt>
 <dd class="updates">
 <a href="https://www.rfc-editor.org/rfc/rfc4271" class="eref">4271</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-05-23" class="published">23 May 2022</time>
+<time datetime="2022-08-18" class="published">18 August 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-11-24">24 November 2022</time></dd>
+<dd class="expires"><time datetime="2023-02-19">19 February 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1230,7 +1239,7 @@ li > p:last-of-type {
 <p id="section-abstract-1">
       This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
       Implementation of a SendHoldTimer should help overcome situations where BGP sessions are not terminated after it has become detectable for the local system that the remote system is not processing BGP messages.
-      For robustness, this document specifies that the local system should close BGP connections and not solely rely on the remote system for session tear down when BGP timers have expired.
+      For robustness, this document specifies that the local system should close BGP connections and not solely rely on the remote system for session closure when BGP timers have expired.
       This document updates RFC4271.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note" id="section-note.1">
@@ -1258,7 +1267,7 @@ li > p:last-of-type {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 November 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 February 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1291,7 +1300,7 @@ li > p:last-of-type {
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction-2" class="xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-example-of-a-problematic-sce" class="xref">Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE PUBLICATION</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="xref">2</a>.  <a href="#name-example-of-a-problematic-sce" class="xref">Example of a problematic scenario</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-specification-of-the-send-ho" class="xref">Specification of the Send Hold Timer</a></p>
@@ -1354,15 +1363,17 @@ li > p:last-of-type {
 </section>
 <section id="section-2">
       <h2 id="name-example-of-a-problematic-sce">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-example-of-a-problematic-sce" class="section-name selfRef">Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE PUBLICATION</a>
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-example-of-a-problematic-sce" class="section-name selfRef">Example of a problematic scenario</a>
       </h2>
 <p id="section-2-1">
-      A malfunctioning or overwhelmed peer may cause data on the BGP socket in the local system to back up, and the current RFC specification will not cause the session to be torn down.
-      For example, as BGP runs over TCP <span>[<a href="#RFC0793" class="xref">RFC0793</a>]</span> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero and thus preventing the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical messages across the wire.
-      At the moment of writing, most BGP implementations appear unable to handle this situation in a robust fashion.<a href="#section-2-1" class="pilcrow">¶</a></p>
+      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to accumulate ad infinitum.
+      This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
+      An example fault state: as BGP runs over TCP <span>[<a href="#RFC0793" class="xref">RFC0793</a>]</span> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
+      Historically, many BGP implementations were unable to handle this situation in a robust fashion.
+      Previous BGP RFC specifications would not give cause for the session to be torn down in such situations.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">
       Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
-      Therefor this document banks on BGP implementations being able to detect an inability to push more data to the remote peer, at which point the SendHoldTimer starts.<a href="#section-2-2" class="pilcrow">¶</a></p>
+      Therefore, this document relies upon BGP implementations having the ability to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 <section id="section-3">
       <h2 id="name-specification-of-the-send-ho">
@@ -1535,9 +1546,10 @@ li > p:last-of-type {
       </h2>
 <p id="section-6-1">
       The authors would like to thank
-      William McCall
-      and
+      William McCall,
       Theo de Raadt
+      and
+      John Heasley
       for their helpful review of this document.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 <section id="section-7">

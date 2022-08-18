@@ -5,12 +5,12 @@
 IDR                                                          J. Snijders
 Internet-Draft                                                    Fastly
 Updates: 4271 (if approved)                            B. Cartwright-Cox
-Intended status: Standards Track                             23 May 2022
-Expires: 24 November 2022
+Intended status: Standards Track                          18 August 2022
+Expires: 19 February 2023
 
 
            Border Gateway Protocol 4 (BGP-4) Send Hold Timer
-                draft-spaghetti-idr-bgp-sendholdtimer-05
+                draft-spaghetti-idr-bgp-sendholdtimer-06
 
 Abstract
 
@@ -21,7 +21,7 @@ Abstract
    for the local system that the remote system is not processing BGP
    messages.  For robustness, this document specifies that the local
    system should close BGP connections and not solely rely on the remote
-   system for session tear down when BGP timers have expired.  This
+   system for session closure when BGP timers have expired.  This
    document updates RFC4271.
 
 Requirements Language
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 November 2022.
+   This Internet-Draft will expire on 19 February 2023.
 
 
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 1]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 1]
 
-Internet-Draft              BGP SendHoldTimer                   May 2022
+Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 Copyright Notice
@@ -75,8 +75,7 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE
-           PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Example of a problematic scenario . . . . . . . . . . . . . .   3
    3.  Specification of the Send Hold Timer  . . . . . . . . . . . .   3
      3.1.  Session Attributes  . . . . . . . . . . . . . . . . . . .   3
      3.2.  SendHoldTimer_Expires Event Definition  . . . . . . . . .   4
@@ -104,19 +103,17 @@ Table of Contents
    theorised to have contributed to IP traffic backholing events in
    global Internet routing system [bgpzombies].
 
-
-
-
-
-
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 2]
-
-Internet-Draft              BGP SendHoldTimer                   May 2022
-
-
    This specification intends to improve this situation by requiring
    sessions to be terminated if the local system has detected that the
    remote system cannot possibly have received any BGP messages for the
+
+
+
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 2]
+
+Internet-Draft              BGP SendHoldTimer                August 2022
+
+
    duration of the SendHoldTimer.  Through codification of the
    aforementioned requirement, operators will benefit from consistent
    behavior across different BGP implementations.
@@ -125,25 +122,28 @@ Internet-Draft              BGP SendHoldTimer                   May 2022
    remote systems robustly closing connections, but will also locally
    close connections.
 
-2.  Example of a problematic scenario - RFC EDITOR: REMOVE BEFORE
-    PUBLICATION
+2.  Example of a problematic scenario
 
-   A malfunctioning or overwhelmed peer may cause data on the BGP socket
-   in the local system to back up, and the current RFC specification
-   will not cause the session to be torn down.  For example, as BGP runs
-   over TCP [RFC0793] it is possible for hosts in the ESTABLISHED state
-   to encounter a BGP peer that is advertising a TCP Receive Window
-   (RCV.WND) of size zero and thus preventing the local system from
-   sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or other critical
-   messages across the wire.  At the moment of writing, most BGP
-   implementations appear unable to handle this situation in a robust
-   fashion.
+   In implementations lacking the concept of a SendHoldTimer, a
+   malfunctioning or overwhelmed remote peer may cause data on the BGP
+   socket in the local system to accumulate ad infinitum.  This could
+   result in forwarding failure and traffic loss, as the overwhelmed
+   peer continues to utilize stale routes.  An example fault state: as
+   BGP runs over TCP [RFC0793] it is possible for hosts in the
+   ESTABLISHED state to encounter a BGP peer that is advertising a TCP
+   Receive Window (RCV.WND) of size zero, this 0 window prevents the
+   local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any
+   other critical BGP messages across the network socket to the remote
+   peer.  Historically, many BGP implementations were unable to handle
+   this situation in a robust fashion.  Previous BGP RFC specifications
+   would not give cause for the session to be torn down in such
+   situations.
 
    Generally BGP implementation have no visibility into lower-layer
    subsystems such as TCP or the peer's current Receive Window.
-   Therefor this document banks on BGP implementations being able to
-   detect an inability to push more data to the remote peer, at which
-   point the SendHoldTimer starts.
+   Therefore, this document relies upon BGP implementations having the
+   ability to detect whether the TCP socket to a BGP peer is progressing
+   (data is being transmitted), or persisting in a stalled state.
 
 3.  Specification of the Send Hold Timer
 
@@ -165,9 +165,9 @@ Internet-Draft              BGP SendHoldTimer                   May 2022
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 3]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 3]
 
-Internet-Draft              BGP SendHoldTimer                   May 2022
+Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 3.2.  SendHoldTimer_Expires Event Definition
@@ -221,9 +221,9 @@ Internet-Draft              BGP SendHoldTimer                   May 2022
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 4]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 4]
 
-Internet-Draft              BGP SendHoldTimer                   May 2022
+Internet-Draft              BGP SendHoldTimer                August 2022
 
 
       -  sets the SendHoldTimer to a large value, and
@@ -269,17 +269,17 @@ Internet-Draft              BGP SendHoldTimer                   May 2022
 
 6.  Acknowledgements
 
-   The authors would like to thank William McCall and Theo de Raadt for
-   their helpful review of this document.
+   The authors would like to thank William McCall, Theo de Raadt and
+   John Heasley for their helpful review of this document.
 
 
 
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 5]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 5]
 
-Internet-Draft              BGP SendHoldTimer                   May 2022
+Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 7.  Security Considerations
@@ -333,9 +333,9 @@ Internet-Draft              BGP SendHoldTimer                   May 2022
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 6]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 6]
 
-Internet-Draft              BGP SendHoldTimer                   May 2022
+Internet-Draft              BGP SendHoldTimer                August 2022
 
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
@@ -361,14 +361,12 @@ Authors' Addresses
    Fastly
    Amsterdam
    Netherlands
-
    Email: job@fastly.com
 
 
    Ben Cartwright-Cox
    London
    United Kingdom
-
    Email: ben@benjojo.co.uk
 
 
@@ -389,4 +387,6 @@ Authors' Addresses
 
 
 
-Snijders & Cartwright-CoExpires 24 November 2022                [Page 7]
+
+
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 7]
