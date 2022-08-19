@@ -5,12 +5,12 @@
 IDR                                                          J. Snijders
 Internet-Draft                                                    Fastly
 Updates: 4271 (if approved)                            B. Cartwright-Cox
-Intended status: Standards Track                            Port 179 Ltd
-Expires: 20 February 2023                                 19 August 2022
+Intended status: Standards Track                          18 August 2022
+Expires: 19 February 2023
 
 
            Border Gateway Protocol 4 (BGP-4) Send Hold Timer
-                draft-spaghetti-idr-bgp-sendholdtimer-08
+                draft-spaghetti-idr-bgp-sendholdtimer-07
 
 Abstract
 
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 February 2023.
+   This Internet-Draft will expire on 19 February 2023.
 
 
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 1]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 1]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 2]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 2]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
@@ -131,17 +131,16 @@ Internet-Draft              BGP SendHoldTimer                August 2022
    malfunctioning or overwhelmed remote peer may cause data on the BGP
    socket in the local system to accumulate ad infinitum.  This could
    result in forwarding failure and traffic loss, as the overwhelmed
-   peer continues to utilize stale routes.
-
-   An example fault state: as BGP runs over TCP [RFC9293] it is possible
-   for hosts in the ESTABLISHED state to encounter a BGP peer that is
-   advertising a TCP Receive Window (RCV.WND) of size zero, this 0
-   window prevents the local system from sending KEEPALIVE, CEASE,
-   WITHDRAW, UPDATE, or any other critical BGP messages across the
-   network socket to the remote peer.  Historically, many BGP
-   implementations were unable to handle this situation in a robust
-   fashion.  Previous BGP RFC specifications would not give cause for
-   the session to be torn down in such situations.
+   peer continues to utilize stale routes.  An example fault state: as
+   BGP runs over TCP [RFC0793] it is possible for hosts in the
+   ESTABLISHED state to encounter a BGP peer that is advertising a TCP
+   Receive Window (RCV.WND) of size zero, this 0 window prevents the
+   local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any
+   other critical BGP messages across the network socket to the remote
+   peer.  Historically, many BGP implementations were unable to handle
+   this situation in a robust fashion.  Previous BGP RFC specifications
+   would not give cause for the session to be torn down in such
+   situations.
 
    Generally BGP implementation have no visibility into lower-layer
    subsystems such as TCP or the peer's current Receive Window.
@@ -165,7 +164,8 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 3]
+
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 3]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
@@ -221,7 +221,7 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 4]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 4]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
@@ -277,7 +277,7 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 5]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 5]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
@@ -301,6 +301,10 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 9.1.  Normative References
 
+   [RFC0793]  Postel, J., "Transmission Control Protocol", STD 7,
+              RFC 793, DOI 10.17487/RFC0793, September 1981,
+              <https://www.rfc-editor.org/info/rfc793>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -319,10 +323,6 @@ Internet-Draft              BGP SendHoldTimer                August 2022
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-   [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
-              RFC 9293, DOI 10.17487/RFC9293, August 2022,
-              <https://www.rfc-editor.org/info/rfc9293>.
-
 9.2.  Informative References
 
    [bgpzombies]
@@ -333,16 +333,13 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 6]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 6]
 
 Internet-Draft              BGP SendHoldTimer                August 2022
 
 
    [frr]      Lamparter, D., "bgpd: implement SendHoldTimer", May 2022,
               <https://github.com/FRRouting/frr/pull/11225>.
-
-   [neo-bgp]  Cartwright-Cox, B., "What does bgp.tools support", August
-              2022, <https://bgp.tools/kb/bgp-support>.
 
    [openbgpd] Jeker, C., "bgpd send side hold timer", December 2020,
               <https://marc.info/?l=openbsd-tech&m=160820754925261&w=2>.
@@ -374,8 +371,6 @@ Appendix A.  Implementation status - RFC EDITOR: REMOVE BEFORE
 
    *  FRRouting [frr]
 
-   *  neo-bgp (bgp.tools) [neo-bgp]
-
 Authors' Addresses
 
    Job Snijders
@@ -385,17 +380,7 @@ Authors' Addresses
    Email: job@fastly.com
 
 
-
-
-
-
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 7]
-
-Internet-Draft              BGP SendHoldTimer                August 2022
-
-
    Ben Cartwright-Cox
-   Port 179 Ltd
    London
    United Kingdom
    Email: ben@benjojo.co.uk
@@ -404,45 +389,4 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 8]
+Snijders & Cartwright-CoExpires 19 February 2023                [Page 7]

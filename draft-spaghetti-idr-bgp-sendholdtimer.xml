@@ -279,7 +279,21 @@
     <?rfc include="reference.RFC.4271.xml"?>
     <?rfc include="reference.RFC.4273.xml"?>
     <?rfc include="reference.RFC.8174.xml"?>
-    <?rfc include="reference.RFC.9293.xml"?>
+    
+    <reference anchor="RFC9293" target="https://www.rfc-editor.org/info/rfc9293">
+      <front>
+        <title>Transmission Control Protocol (TCP)</title>
+        <author fullname="Wesley M. Eddy" initials="W." surname="Eddy" role="editor"/>
+        <date month="August" year="2022"/>
+        <abstract>
+          <t>This document specifies the Transmission Control Protocol (TCP). TCP is an important transport-layer protocol in the Internet protocol stack, and it has continuously evolved over decades of use and growth of the Internet. Over this time, a number of changes have been made to TCP as it was specified in RFC 793, though these have only been documented in a piecemeal fashion. This document collects and brings those changes together with the protocol specification from RFC 793. This document obsoletes RFC 793, as well as RFCs 879, 2873, 6093, 6429, 6528, and 6691 that updated parts of RFC 793. It updates RFCs 1011 and 1122, and it should be considered as a replacement for the portions of those documents dealing with TCP requirements. It also updates RFC 5961 by adding a small clarification in reset handling while in the SYN-RECEIVED state. The TCP header control bits from RFC 793 have also been updated based on RFC 3168.
+          </t>
+        </abstract>
+      </front>
+      <seriesInfo name="RFC" value="9293"/>
+      <seriesInfo name="DOI" value="10.17487/RFC9293"/>
+    </reference>
+
   </references>
 
   <references title="Informative References">
