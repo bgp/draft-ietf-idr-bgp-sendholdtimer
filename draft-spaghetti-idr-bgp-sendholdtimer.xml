@@ -150,13 +150,13 @@
   </t>
 
 <figure><artwork>
-    Event XX: SendHoldTimer_Expires
+    Event XX1: SendHoldTimer_Expires
     Definition : An event generated when the SendHoldTimer expires.
     Status: Mandatory
 </artwork></figure>
 
     <t>
-    If the SendHoldTimer_Expires (Event XX), the local system:
+    If the SendHoldTimer_Expires (Event XX1), the local system:
       <list style="empty">
         <t>
           <list style="hanging">
@@ -210,28 +210,29 @@
 
   </section>
 
-  <section title="KeepAliveMsgSent Event Definition">
+  <section title="MsgSent Event Definition">
   <t>
     Section 8.1.5 <xref target="RFC4271"/> is extended as following:
   </t>
 
    <figure><artwork>
-   Event XX2: KeepAliveMsgSent
-   Definition: An event is generated when a KEEPALIVE message is transmitted.
+   Event XX2: MsgSent
+   Definition: An event is generated when a KEEPALIVE or UPDATE message is transmitted.
    Status: Mandatory
 </artwork></figure>
   </section>
 
   <section title="Restarting the SendHoldTimer">
     <t>
-      Before "If the local system receives a KEEPALIVE message (KeepAliveMsg (Event 26)), the local system:", add the following text:
+      On page 74 <xref target="RFC4271"/> before "If the local system receives an UPDATE message, and the UPDATE message error handling procedure (see Section 6.3) detects an error (Event 28), the local system:", add the following:
     </t>
     <t>
-      If the local system transmits a KEEPALIVE message (KeepAliveMsgSent (Event XX2)), the local system:
+      If the local system transmits a KEEPALIVE or UPDATE message (MsgSent (Event XX2)), the local system:
       <list>
         <t>
           <list style="hanging">
-            <t hangText="-">restarts the SendHoldTimer</t>
+            <t hangText="-">restarts the SendHoldTimer, and</t>
+            <t hangText="-">remains in the Established state.</t>
           </list>
         </t>
        </list>
