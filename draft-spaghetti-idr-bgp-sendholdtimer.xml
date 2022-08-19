@@ -191,11 +191,11 @@
         <t>
           <list style="hanging">
             <t hangText="-">stops the ConnectRetryTimer (if running) and sets the ConnectRetryTimer to zero,</t>
-      <t hangText="-">completes BGP initialization</t>
-      <t hangText="-">sends an OPEN message to its peer,</t>
-      <t hangText="-">sets the HoldTimer to a large value, and</t>
-      <t hangText="-">sets the SendHoldTimer to a large value, and</t>
-      <t hangText="-">changes its state to OpenSent.</t>
+            <t hangText="-">completes BGP initialization</t>
+            <t hangText="-">sends an OPEN message to its peer,</t>
+            <t hangText="-">sets the HoldTimer to a large value, and</t>
+            <t hangText="-">sets the SendHoldTimer to a large value, and</t>
+            <t hangText="-">changes its state to OpenSent.</t>
           </list>
         </t>
       </list>
@@ -208,6 +208,34 @@
       A SendHoldTimer value of 8 minutes is suggested.
     </t>
 
+  </section>
+
+  <section title="KeepAliveMsgSent Event Definition">
+  <t>
+    Section 8.1.5 <xref target="RFC4271"/> is extended as following:
+  </t>
+
+   <figure><artwork>
+   Event XX2: KeepAliveMsgSent
+   Definition: An event is generated when a KEEPALIVE message is transmitted.
+   Status: Mandatory
+</artwork></figure>
+  </section>
+
+  <section title="Restarting the SendHoldTimer">
+    <t>
+      Before "If the local system receives a KEEPALIVE message (KeepAliveMsg (Event 26)), the local system:", add the following text:
+    </t>
+    <t>
+      If the local system transmits a KEEPALIVE message (KeepAliveMsgSent (Event XX2)), the local system:
+      <list>
+        <t>
+          <list style="hanging">
+            <t hangText="-">restarts the SendHoldTimer</t>
+          </list>
+        </t>
+       </list>
+    </t>
   </section>
   </section>
 

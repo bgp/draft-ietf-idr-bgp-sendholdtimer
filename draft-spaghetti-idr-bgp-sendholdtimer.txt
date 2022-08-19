@@ -79,17 +79,19 @@ Table of Contents
    3.  Specification of the Send Hold Timer  . . . . . . . . . . . .   3
      3.1.  Session Attributes  . . . . . . . . . . . . . . . . . . .   3
      3.2.  SendHoldTimer_Expires Event Definition  . . . . . . . . .   4
+     3.3.  KeepAliveMsgSent Event Definition . . . . . . . . . . . .   5
+     3.4.  Restarting the SendHoldTimer  . . . . . . . . . . . . . .   5
    4.  Send Hold Timer Expired Error Handling  . . . . . . . . . . .   5
    5.  Operational Considerations  . . . . . . . . . . . . . . . . .   5
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .   7
    Appendix A.  Implementation status - RFC EDITOR: REMOVE BEFORE
            PUBLICATION . . . . . . . . . . . . . . . . . . . . . . .   7
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -103,8 +105,6 @@ Table of Contents
    participants of the inter-domain routing system.  This phenomena is
    theorised to have contributed to IP traffic backholing events in
    global Internet routing system [bgpzombies].
-
-
 
 
 
@@ -236,6 +236,25 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
    A SendHoldTimer value of 8 minutes is suggested.
 
+3.3.  KeepAliveMsgSent Event Definition
+
+   Section 8.1.5 [RFC4271] is extended as following:
+
+   Event XX2: KeepAliveMsgSent
+   Definition: An event is generated when a KEEPALIVE message is transmitted.
+   Status: Mandatory
+
+3.4.  Restarting the SendHoldTimer
+
+   Before "If the local system receives a KEEPALIVE message
+   (KeepAliveMsg (Event 26)), the local system:", add the following
+   text:
+
+   If the local system transmits a KEEPALIVE message (KeepAliveMsgSent
+   (Event XX2)), the local system:
+
+      -  restarts the SendHoldTimer
+
 4.  Send Hold Timer Expired Error Handling
 
    If a system does not send successive KEEPALIVE, UPDATE, and/or
@@ -252,6 +271,16 @@ Internet-Draft              BGP SendHoldTimer                August 2022
 
    Even so, BGP speakers SHOULD provide this reason as part of their
    operational state; e.g. bgpPeerLastError in the BGP MIB [RFC4273].
+
+
+
+
+
+
+Snijders & Cartwright-CoExpires 20 February 2023                [Page 5]
+
+Internet-Draft              BGP SendHoldTimer                August 2022
+
 
 6.  Security Considerations
 
@@ -273,14 +302,6 @@ Internet-Draft              BGP SendHoldTimer                August 2022
    *  Failure to disconnect from a 'stuck' peer hinders the local
       system's ability to inform other BGP peers with current network
       reachability information.
-
-
-
-
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 5]
-
-Internet-Draft              BGP SendHoldTimer                August 2022
-
 
    In other respects, this specification does not change BGP's security
    characteristics.
@@ -306,6 +327,17 @@ Internet-Draft              BGP SendHoldTimer                August 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+
+
+
+Snijders & Cartwright-CoExpires 20 February 2023                [Page 6]
+
+Internet-Draft              BGP SendHoldTimer                August 2022
+
+
    [RFC4271]  Rekhter, Y., Ed., Li, T., Ed., and S. Hares, Ed., "A
               Border Gateway Protocol 4 (BGP-4)", RFC 4271,
               DOI 10.17487/RFC4271, January 2006,
@@ -329,14 +361,6 @@ Internet-Draft              BGP SendHoldTimer                August 2022
               Fontugne, R., "BGP Zombies", April 2019,
               <https://labs.ripe.net/author/romain_fontugne/bgp-
               zombies/>.
-
-
-
-
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 6]
-
-Internet-Draft              BGP SendHoldTimer                August 2022
-
 
    [frr]      Lamparter, D., "bgpd: implement SendHoldTimer", May 2022,
               <https://github.com/FRRouting/frr/pull/11225>.
@@ -363,6 +387,13 @@ Appendix A.  Implementation status - RFC EDITOR: REMOVE BEFORE
    features.  Readers are advised to note that other implementations may
    exist.
 
+
+
+Snijders & Cartwright-CoExpires 20 February 2023                [Page 7]
+
+Internet-Draft              BGP SendHoldTimer                August 2022
+
+
    According to RFC 7942, "this will allow reviewers and working groups
    to assign due consideration to documents that have the benefit of
    running code, which may serve as evidence of valuable experimentation
@@ -385,42 +416,11 @@ Authors' Addresses
    Email: job@fastly.com
 
 
-
-
-
-
-Snijders & Cartwright-CoExpires 20 February 2023                [Page 7]
-
-Internet-Draft              BGP SendHoldTimer                August 2022
-
-
    Ben Cartwright-Cox
    Port 179 Ltd
    London
    United Kingdom
    Email: ben@benjojo.co.uk
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
