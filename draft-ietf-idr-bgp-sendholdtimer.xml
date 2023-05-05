@@ -10,7 +10,7 @@
 
 <rfc
   category="std"
-  docName="draft-spaghetti-idr-bgp-sendholdtimer-09"
+  docName="draft-ietf-idr-bgp-sendholdtimer-00"
   updates="4271"
   ipr="trust200902"
   submissionType="IETF"
