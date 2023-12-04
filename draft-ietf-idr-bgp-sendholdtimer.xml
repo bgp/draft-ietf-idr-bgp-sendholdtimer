@@ -10,7 +10,7 @@
 
 <rfc
   category="std"
-  docName="draft-ietf-idr-bgp-sendholdtimer-00"
+  docName="draft-ietf-idr-bgp-sendholdtimer-01"
   updates="4271"
   ipr="trust200902"
   submissionType="IETF"
@@ -84,7 +84,7 @@
 
     <t>
       Failure to terminate a 'stuck' BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
-      This phenomena is theorised to have contributed to IP traffic backholing events in global Internet routing system <xref target="bgpzombies"/>.
+      This phenomena is theorised to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
       This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTimer.
@@ -112,7 +112,7 @@
     </t>
   </section>
 
-  <section title="Specification of the Send Hold Timer">
+  <section title="SendHoldTimer - Changes to RFC 4217">
   <!-- todo:
  
      rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
@@ -124,12 +124,12 @@
 
   <t>
     BGP speakers are implemented following a conceptual model "BGP Finite State Machine" (FSM), which is outlined in section 8 of <xref target="RFC4271"/>.
-    This specification updates the BGP FSM as following:
+    This specification adds a BGP timer, SendHoldTimer, and updates the BGP FSM as following:
   </t>
 
   <section title="Session Attributes">
     <t>
-      The following mandatory session attributes are added to paragraph 6 of Section 8, before "The state session attribute indicates the current state of the BGP FSM":
+      The following mandatory session attributes for each connection are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
     </t>
 
     <t>
@@ -144,100 +144,75 @@
     </t>
   </section>
 
-  <section title="SendHoldTimer_Expires Event Definition">
+  <section title="Timer Event: SendHoldTimer_Expires">
   <t>
-    Section 8.1.3 <xref target="RFC4271"/> is extended as following:
+    Another timer event is added to Section 8.1.3 of <xref target="RFC4271"/> as following:
   </t>
+  <dl newline="true">
+    <dt>Event XX1: SendHoldTimer_Expires</dt>
+    <dd>
+      <dl>
+      <dt>Definition:</dt>
+      <dd>An event generated when the SendHoldTimer expires. </dd>
+      <dt>Status:</dt>
+      <dd>Mandatory</dd>
+      </dl>
+    </dd>
+  </dl>
+  </section>
 
-<figure><artwork>
-    Event XX1: SendHoldTimer_Expires
-    Definition : An event generated when the SendHoldTimer expires.
-    Status: Mandatory
-</artwork></figure>
-
-    <t>
-    If the SendHoldTimer_Expires (Event XX1), the local system:
-      <list style="empty">
-        <t>
+  <section title="Changes to the FSM">
+    <t>The following changes are made to section 8.2.2 in <xref target="RFC4271"/>.</t>
+    <t>In "OpenConfirm State", the handling of Event 26 is revised as follows:</t>
+    <dl newline="true">
+      <dt>Old Text:</dt>
+      <dd>
+        <t>If the local system receives a KEEPALIVE message (KeepAliveMsg
+           (Event 26)), the local system:
           <list style="hanging">
-            <t hangText="-">logs a message with the BGP Error Notification Code "Send Hold Timer Expired",</t>
+            <t hangText="-">restarts the HoldTimer and</t>
+            <t hangText="-">changes its state to Established.</t>
+          </list></t>
+      </dd>
+      <dt>Next Text:</dt>
+      <dd>
+        <t>If the local system receives a KEEPALIVE message (KeepAliveMsg
+           (Event 26)), the local system:
+          <list style="hanging">
+            <t hangText="-">restarts the HoldTimer,</t>
+            <t hangText="-">sets the SendHoldTimer to the default or configured value, and</t>
+            <t hangText="-">changes its state to Established.</t>
+          </list></t>
+      </dd>
+    </dl>
+
+    <t>The following paragraph is added to section 8.2.2 in "Established State",
+      after the paragraph which ends "unless the negotiated HoldTime value
+      is zero.":</t>
+      <t>   
+      <list style="empty">
+        <t>If the SendHoldTimer_Expires (Event XX1), the local system:
+          <list style="hanging">
+            <t hangText="-">sends a NOTIFICATION message with the BGP Error Code "Send Hold Timer Expired",</t>
+            <t hangText="-">logs an error message in the local system with the BGP Error Code "Send Hold Timer Expired",</t>
             <t hangText="-">releases all BGP resources,</t>
             <t hangText="-">sets the ConnectRetryTimer to zero,</t>
             <t hangText="-">drops the TCP connection,</t>
-            <t hangText="-">increments the ConnectRetryCounter,</t>
+            <t hangText="-">increments the ConnectRetryCounter by 1,</t>
             <t hangText="-">(optionally) performs peer oscillation damping if the DampPeerOscillations attribute is set to TRUE, and</t>
             <t hangText="-">changes its state to Idle.</t>
           </list>
         </t>
+        <t>Each time the local system successfully sends a KEEPALIVE or UPDATE message, it restarts its SendHOldTimer.</t> 
       </list>
     </t>
-    <t>
-      If the DelayOpenTimer_Expires event (Event 12) occurs in the Connect state, the local system:
-      <list>
-        <t>
-          <list style="hanging">
-            <t hangText="-">sends an OPEN message to its peer,</t>
-            <t hangText="-">sets the HoldTimer to a large value, and</t>
-            <t hangText="-">sets the SendHoldTimer to a large value, and</t>
-            <t hangText="-">changes its state to OpenSent.</t>
-          </list>
-        </t>
-      </list>
-    </t>
-
-    <t>
-    If the DelayOpen attribute is set to FALSE, the local system:
-      <list>
-        <t>
-          <list style="hanging">
-            <t hangText="-">stops the ConnectRetryTimer (if running) and sets the ConnectRetryTimer to zero,</t>
-            <t hangText="-">completes BGP initialization</t>
-            <t hangText="-">sends an OPEN message to its peer,</t>
-            <t hangText="-">sets the HoldTimer to a large value, and</t>
-            <t hangText="-">sets the SendHoldTimer to a large value, and</t>
-            <t hangText="-">changes its state to OpenSent.</t>
-          </list>
-        </t>
-      </list>
-    </t>
-
-    <t>
-      A HoldTimer value of 4 minutes is suggested.
-    </t>
-    <t>
-      A SendHoldTimer value of 8 minutes is suggested.
-    </t>
-
   </section>
 
-  <section title="MsgSent Event Definition">
-  <t>
-    Section 8.1.5 <xref target="RFC4271"/> is extended as following:
-  </t>
-
-   <figure><artwork>
-   Event XX2: MsgSent
-   Definition: An event is generated when a KEEPALIVE or UPDATE message is transmitted.
-   Status: Mandatory
-</artwork></figure>
+  <section title="Changes to BGP Timers">
+    <t>In Section 10 of <xref target="RFC4271"/> summarizes BGP Timers. This document adds another BGP timer: SendHoldTimer.</t>
+    <t>SendHoldTime is a mandatory FSM attribute that stores the initial value for the SendHoldTimer. The suggested default value for SendHoldTime is 8 minutes. An implementation MAY make it configurable.</t>
   </section>
 
-  <section title="Restarting the SendHoldTimer">
-    <t>
-      On page 74 <xref target="RFC4271"/> before "If the local system receives an UPDATE message, and the UPDATE message error handling procedure (see Section 6.3) detects an error (Event 28), the local system:", add the following:
-    </t>
-    <t>
-      If the local system transmits a KEEPALIVE or UPDATE message (MsgSent (Event XX2)), the local system:
-      <list>
-        <t>
-          <list style="hanging">
-            <t hangText="-">restarts the SendHoldTimer, and</t>
-            <t hangText="-">remains in the Established state.</t>
-          </list>
-        </t>
-       </list>
-    </t>
-  </section>
   </section>
 
   <section title="Send Hold Timer Expired Error Handling">
