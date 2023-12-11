@@ -10,7 +10,7 @@
 
 <rfc
   category="std"
-  docName="draft-ietf-idr-bgp-sendholdtimer-01"
+  docName="draft-ietf-idr-bgp-sendholdtimer-02"
   updates="4271"
   ipr="trust200902"
   submissionType="IETF"
@@ -327,6 +327,14 @@
       </front>
     </reference>
 
+    <reference anchor="BIRD" target="https://gitlab.nic.cz/labs/bird/-/commit/bcf2327425d4dd96f381b87501cccf943bed606e">
+      <front>
+        <title>BIRD Internet Routing Daemon</title>
+        <author fullname=" Katerina Kubecova"><organization>CZ.NIC</organization></author>
+        <date month="Oct" year="2023" />
+      </front>
+    </reference>
+
     <reference anchor="bgpzombies" target="https://labs.ripe.net/author/romain_fontugne/bgp-zombies/">
       <front>
         <title>BGP Zombies</title>
@@ -366,6 +374,11 @@
       <list style="symbols">
         <t>
           neo-bgp (bgp.tools) <xref target="neo-bgp"/>
+        </t>
+      </list>
+      <list style="symbols">
+        <t>
+          BIRD <xref target="BIRD"/>
         </t>
       </list>
 
