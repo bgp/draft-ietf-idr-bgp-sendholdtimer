@@ -218,7 +218,7 @@
             <t hangText="-">changes its state to Idle.</t>
           </list>
         </t>
-        <t>Each time the local system successfully sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHOldTimer.</t> 
+        <t>Each time the local system successfully sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHoldTimer.</t> 
       </list>
     </t>
   </section>
