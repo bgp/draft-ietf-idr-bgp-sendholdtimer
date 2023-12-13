@@ -45,6 +45,18 @@
       <email>ben@benjojo.co.uk</email>
     </address>
   </author>
+  <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
+    <organization>Futurewei Technologies</organization>
+    <address>
+      <postal>
+        <street />
+        <city>Santa Clara</city>
+        <code />
+        <country>United States</country>        
+      </postal>
+      <email>yingzhen.ietf@gmail.com</email>
+    </address>
+  </author>
   <date />
 
   <area>Routing</area>
@@ -58,9 +70,9 @@
   <abstract>
 
     <t>
-      This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
-      Implementation of a SendHoldTimer should help overcome situations where BGP sessions are not terminated after it has become detectable for the local system that the remote system is not processing BGP messages.
-      For robustness, this document specifies that the local system should close BGP connections and not solely rely on the remote system for session closure when BGP timers have expired.
+      This document defines the SendHoldTimer and SendHoldTime session attributes for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
+      Implementation of the SendHoldTimer helps overcome situations where a BGP session is not terminated after the local system detects that the remote system is not processing BGP messages.
+      This document specifies that the local system should close the BGP connection and not solely rely on the remote system for session closure when the SendHoldTimer expires.
       This document updates RFC4271.
     </t>
 
@@ -79,15 +91,15 @@
   <section title="Introduction">
 
     <t>
-      This document defines the SendHoldTimer session attribute for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
+      This document defines the SendHoldTimer and SendHoldTime session attributes for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
     </t>
 
     <t>
-      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
-      This phenomena is theorised to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
+      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      This phenomena is theorized to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
-      This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTimer.
+      This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTime.
       Through codification of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
@@ -102,17 +114,17 @@
       This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
     </t>
     <t>
-      An example fault state: as BGP runs over TCP <xref target="RFC9293" /> it is possible for hosts in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero, this 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
-      Historically, many BGP implementations were unable to handle this situation in a robust fashion.
-      Previous BGP RFC specifications would not give cause for the session to be torn down in such situations.
+      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero. This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages successfully across the network socket to the remote peer, and this causes the BGP FSM to stuck.
     </t>
     <t>
-      Generally BGP implementation have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window.
-      Therefore, this document relies upon BGP implementations having the ability to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a stuck session to be torn down. Hence BGP implementations are not able to handle this situation in a robust and consistent fashion.
+    </t>
+    <t>
+      This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state. In case of a stalled state, the BGP session can be restarted.
     </t>
   </section>
 
-  <section title="SendHoldTimer - Changes to RFC 4217">
+  <section title="SendHoldTimer - Changes to RFC 4271">
   <!-- todo:
  
      rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
@@ -141,6 +153,9 @@
           10) SendHoldTime (an initial value of 8 minutes is recommended)
         </t>
       </list>
+    </t>
+
+    <t>The SendHoldTime determines how long a BGP speaker would stay in Established state before the TCP connection is dropped because no BGP messages can be successfully transmitted to its peer. A BGP speaker can configure the value of the SendHoldTime to each peer independently.
     </t>
   </section>
 
@@ -203,7 +218,7 @@
             <t hangText="-">changes its state to Idle.</t>
           </list>
         </t>
-        <t>Each time the local system successfully sends a KEEPALIVE or UPDATE message, it restarts its SendHOldTimer.</t> 
+        <t>Each time the local system successfully sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHOldTimer.</t> 
       </list>
     </t>
   </section>
@@ -223,10 +238,10 @@
 
   <section title="Operational Considerations">
     <t>
-      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the Send Hold Timer, the local system will not be able to inform the remote peer through a BGP message as to why the session is being closed (i.e. a NOTIFICATION message with the "Send Hold Timer Expired" error code).
+      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, likely the local system will not be able to inform the remote peer through a BGP message as to why the session is being closed by sending a NOTIFICATION.  This documents suggests that a NOTIFICATION message with the "Send Hold Timer Expired" error code is still sent, meanwhile an error message SHOULD be logged into the local system.
     </t>
     <t>
-      Even so, BGP speakers SHOULD provide this reason as part of their operational state; e.g. bgpPeerLastError in the <xref target="RFC4273">BGP MIB</xref>.
+      Other mechanisms can be used as well, for example BGP speakers SHOULD provide this reason as part of their operational state; e.g. bgpPeerLastError in the <xref target="RFC4273">BGP MIB</xref>.
     </t>
   </section>
 
