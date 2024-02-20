@@ -45,6 +45,7 @@
       <email>ben@benjojo.co.uk</email>
     </address>
   </author>
+
   <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
     <organization>Futurewei Technologies</organization>
     <address>
@@ -114,13 +115,16 @@
       This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
     </t>
     <t>
-      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero. This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages successfully across the network socket to the remote peer, and this causes the BGP FSM to stuck.
+      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
+      This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages successfully across the network socket to the remote peer, and this causes the BGP FSM to stuck.
     </t>
     <t>
-      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a stuck session to be torn down. Hence BGP implementations are not able to handle this situation in a robust and consistent fashion.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a stuck session to be torn down.
+      Hence BGP implementations are not able to handle this situation in a robust and consistent fashion.
     </t>
     <t>
-      This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state. In case of a stalled state, the BGP session can be restarted.
+      This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
+      In case of a stalled state, the BGP session can be restarted.
     </t>
   </section>
 
@@ -155,7 +159,9 @@
       </list>
     </t>
 
-    <t>The SendHoldTime determines how long a BGP speaker would stay in Established state before the TCP connection is dropped because no BGP messages can be successfully transmitted to its peer. A BGP speaker can configure the value of the SendHoldTime to each peer independently.
+    <t>
+      The SendHoldTime determines how long a BGP speaker would stay in Established state before the TCP connection is dropped because no BGP messages can be successfully transmitted to its peer.
+      A BGP speaker can configure the value of the SendHoldTime to each peer independently.
     </t>
   </section>
 
@@ -238,7 +244,8 @@
 
   <section title="Operational Considerations">
     <t>
-      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, likely the local system will not be able to inform the remote peer through a BGP message as to why the session is being closed by sending a NOTIFICATION.  This documents suggests that a NOTIFICATION message with the "Send Hold Timer Expired" error code is still sent, meanwhile an error message SHOULD be logged into the local system.
+      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, likely the local system will not be able to inform the remote peer through a BGP message as to why the session is being closed by sending a NOTIFICATION.
+      This documents suggests that a NOTIFICATION message with the "Send Hold Timer Expired" error code is still sent, meanwhile an error message SHOULD be logged into the local system.
     </t>
     <t>
       Other mechanisms can be used as well, for example BGP speakers SHOULD provide this reason as part of their operational state; e.g. bgpPeerLastError in the <xref target="RFC4273">BGP MIB</xref>.
@@ -270,9 +277,8 @@
   </section>
 
   <section title="IANA Considerations">
-    <!-- https://www.iana.org/assignments/bgp-parameters/bgp-parameters.xhtml#bgp-parameters-3 -->
     <t>
-      This document requests IANA to assign a value named "Send Hold Timer Expired" in the "BGP Error (Notification) Codes" sub-registry under the "Border Gateway Protocol (BGP) Parameters" registry.
+      IANA has registered code 8 for "Send Hold Timer Expired" in the "BGP Error (Notification) Codes" sub-registry under the "Border Gateway Protocol (BGP) Parameters" registry.
     </t>
   </section>
 
