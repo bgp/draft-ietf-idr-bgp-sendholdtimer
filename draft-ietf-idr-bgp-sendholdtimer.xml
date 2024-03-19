@@ -53,7 +53,7 @@
         <street />
         <city>Santa Clara</city>
         <code />
-        <country>United States</country>        
+        <country>United States</country>
       </postal>
       <email>yingzhen.ietf@gmail.com</email>
     </address>
@@ -88,7 +88,7 @@
 </front>
 
 <middle>
- 
+
   <section title="Introduction">
 
     <t>
@@ -96,7 +96,7 @@
     </t>
 
     <t>
-      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is theorized to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
@@ -116,7 +116,7 @@
     </t>
     <t>
       An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
-      This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages successfully across the network socket to the remote peer, and this causes the BGP FSM to stuck.
+      This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
       Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a stuck session to be torn down.
@@ -130,7 +130,7 @@
 
   <section title="SendHoldTimer - Changes to RFC 4271">
   <!-- todo:
- 
+
      rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
      rfc 4271 section 6.* - Send Hold Timer Expired Error Handling
      rfc 4271 section 8.1.1 - event
@@ -160,7 +160,7 @@
     </t>
 
     <t>
-      The SendHoldTime determines how long a BGP speaker would stay in Established state before the TCP connection is dropped because no BGP messages can be successfully transmitted to its peer.
+      The SendHoldTime determines how long a BGP speaker would stay in Established state before the TCP connection is dropped because no BGP messages can be transmitted to its peer.
       A BGP speaker can configure the value of the SendHoldTime to each peer independently.
     </t>
   </section>
@@ -210,7 +210,7 @@
     <t>The following paragraph is added to section 8.2.2 in "Established State",
       after the paragraph which ends "unless the negotiated HoldTime value
       is zero.":</t>
-      <t>   
+      <t>
       <list style="empty">
         <t>If the SendHoldTimer_Expires (Event XX1), the local system:
           <list style="hanging">
@@ -224,7 +224,7 @@
             <t hangText="-">changes its state to Idle.</t>
           </list>
         </t>
-        <t>Each time the local system successfully sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHoldTimer.</t> 
+        <t>Each time the local system sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHoldTimer.</t>
       </list>
     </t>
   </section>
@@ -305,7 +305,7 @@
     <?rfc include="reference.RFC.4271.xml"?>
     <?rfc include="reference.RFC.4273.xml"?>
     <?rfc include="reference.RFC.8174.xml"?>
-    
+
     <reference anchor="RFC9293" target="https://www.rfc-editor.org/info/rfc9293">
       <front>
         <title>Transmission Control Protocol (TCP)</title>
