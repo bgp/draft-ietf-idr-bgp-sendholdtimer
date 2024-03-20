@@ -104,7 +104,7 @@
       Through codification of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
-      BGP speakers following this specification do not exclusively rely on remote systems robustly closing connections, but will also locally close connections.
+      BGP speakers following this specification do not exclusively rely on remote systems closing blocked connections, but will also locally close connections.
     </t>
 
   </section>
@@ -120,7 +120,7 @@
     </t>
     <t>
       Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked session to be torn down.
-      Hence BGP implementations are not able to handle this situation in a robust and consistent fashion.
+      Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
       This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
