@@ -71,7 +71,7 @@
   <abstract>
 
     <t>
-      This document defines the SendHoldTimer and SendHoldTime session attributes for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
+      This document defines the SendHoldtimer and the SendHoldTimer Expired events for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
       Implementation of the SendHoldTimer helps overcome situations where a BGP session is not terminated after the local system detects that the remote system is not processing BGP messages.
       This document specifies that the local system should close the BGP connection and not solely rely on the remote system for session closure when the SendHoldTimer expires.
       This document updates RFC4271.
@@ -92,11 +92,11 @@
   <section title="Introduction">
 
     <t>
-      This document defines the SendHoldTimer and SendHoldTime session attributes for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
+      This document defines the SendHoldtimer and the SendHoldTimer Expired events for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
     </t>
 
     <t>
-      Failure to terminate a 'stuck' BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a blocked BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is theorized to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
@@ -119,7 +119,7 @@
       This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
-      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a stuck session to be torn down.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked session to be torn down.
       Hence BGP implementations are not able to handle this situation in a robust and consistent fashion.
     </t>
     <t>
@@ -258,16 +258,16 @@
       This specification addresses the vulnerability of a BGP speaker to a potential attack whereby a BGP peer can pretend to be unable to process BGP messages and in doing so create a scenario where the local system is poisoned with stale routing information.
     </t>
     <t>
-      There are three detrimental aspects to the problem of not robustly handling 'stuck' peers:
+      There are three detrimental aspects to the problem of not robustly handling blocked peers:
       <list style="none">
         <t>
           Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
         </t>
         <t>
-          Failure to disconnect from a 'stuck' peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
+          Failure to disconnect from a blocked peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
         </t>
         <t>
-          Failure to disconnect from a 'stuck' peer hinders the local system's ability to inform other BGP peers with current network reachability information.
+          Failure to disconnect from a blocked peer hinders the local system's ability to inform other BGP peers with current network reachability information.
         </t>
       </list>
     </t>
