@@ -231,7 +231,7 @@
 
   <section title="Changes to BGP Timers">
     <t>In Section 10 of <xref target="RFC4271"/> summarizes BGP Timers. This document adds another BGP timer: SendHoldTimer.</t>
-    <t>SendHoldTime is a mandatory FSM attribute that stores the initial value for the SendHoldTimer. The suggested default value for SendHoldTime is 8 minutes. An implementation MAY make it configurable.</t>
+    <t>SendHoldTime is a mandatory FSM attribute that stores the initial value for the SendHoldTimer. SendHoldTime MUST be greater than the value of KeepAliveTime. The suggested default value for SendHoldTime is the greater of 8 minutes or 6 times KeepAliveTime. An implementation MAY make it configurable.</t>
   </section>
 
   </section>
