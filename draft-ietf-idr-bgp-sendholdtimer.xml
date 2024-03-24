@@ -71,7 +71,7 @@
   <abstract>
 
     <t>
-      This document defines the SendHoldtimer and the SendHoldTimer Expired events for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
+      This document defines the SendHoldtimer, along with the SendHoldTimer_Expires event, for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
       Implementation of the SendHoldTimer helps overcome situations where a BGP session is not terminated after the local system detects that the remote system is not processing BGP messages.
       This document specifies that the local system should close the BGP connection and not solely rely on the remote system for session closure when the SendHoldTimer expires.
       This document updates RFC4271.
@@ -92,16 +92,16 @@
   <section title="Introduction">
 
     <t>
-      This document defines the SendHoldtimer and the SendHoldTimer Expired events for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
+      This document defines the SendHoldtimer, along with the SendHoldTimer_Expires event, for the Border Gateway Protocol (BGP) <xref target="RFC4271" /> Finite State Machine (FSM) defined in section 8.
     </t>
 
     <t>
       Failure to terminate a blocked BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
-      This phenomena is theorized to have contributed to IP traffic blackholing events in global Internet routing system <xref target="bgpzombies"/>.
+      This phenomena is thought to have contributed to IP traffic blackholing events in the global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
-      This specification intends to improve this situation by requiring sessions to be terminated if the local system has detected that the remote system cannot possibly have received any BGP messages for the duration of the SendHoldTime.
-      Through codification of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
+      This specification intends to improve this situation by requiring that sessions be terminated if the local system has detected that the remote system cannot possibly have processed any BGP messages for the duration of the SendHoldTime.
+      Through standardisation of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
       BGP speakers following this specification do not exclusively rely on remote systems closing blocked connections, but will also locally close connections.
@@ -154,7 +154,7 @@
           9) SendHoldTimer
         </t>
         <t>
-          10) SendHoldTime (an initial value of 8 minutes is recommended)
+          10) SendHoldTime
         </t>
       </list>
     </t>
@@ -201,7 +201,7 @@
            (Event 26)), the local system:
           <list style="hanging">
             <t hangText="-">restarts the HoldTimer,</t>
-            <t hangText="-">sets the SendHoldTimer to the default or configured value, and</t>
+            <t hangText="-">sets the SendHoldTimer to the default or configured value of SendHoldTime, and</t>
             <t hangText="-">changes its state to Established.</t>
           </list></t>
       </dd>
