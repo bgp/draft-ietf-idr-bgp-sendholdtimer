@@ -101,7 +101,7 @@
     </t>
     <t>
       This specification intends to improve this situation by requiring that sessions be terminated if the local system has detected that the remote system cannot possibly have processed any BGP messages for the duration of the SendHoldTime.
-      Through standardisation of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
+      Through standardization of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
       BGP speakers following this specification do not exclusively rely on remote systems closing blocked connections, but will also locally close connections.
