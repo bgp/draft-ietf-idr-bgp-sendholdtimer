@@ -214,7 +214,7 @@
       <list style="empty">
         <t>If the SendHoldTimer_Expires (Event XX1), the local system:
           <list style="hanging">
-            <t hangText="-">sends a NOTIFICATION message with the BGP Error Code "Send Hold Timer Expired",</t>
+            <t hangText="-">enqueues a NOTIFICATION message with the BGP Error Code "Send Hold Timer Expired",</t>
             <t hangText="-">logs an error message in the local system with the BGP Error Code "Send Hold Timer Expired",</t>
             <t hangText="-">releases all BGP resources,</t>
             <t hangText="-">sets the ConnectRetryTimer to zero,</t>
@@ -224,7 +224,9 @@
             <t hangText="-">changes its state to Idle.</t>
           </list>
         </t>
-        <t>Each time the local system sends a KEEPALIVE, UPDATE, and/or NOTIFICATION message, it restarts its SendHoldTimer unless the negotiated HoldTime value is zero in which case the SendHoldTimer is stopped.</t>
+        <t>
+          Each time the local system sends a KEEPALIVE or UPDATE message, it restarts its SendHoldTimer; unless the negotiated HoldTime value is zero in which case the SendHoldTimer is stopped.
+        </t>
       </list>
     </t>
   </section>
@@ -238,14 +240,16 @@
 
   <section title="Send Hold Timer Expired Error Handling">
     <t>
-	If a system does not send successive KEEPALIVE, UPDATE, and/or NOTIFICATION messages within the period specified in the Send Hold Time, then the BGP connection is closed and a log message is emitted.
+        If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP connection MUST be closed.
+        Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
     </t>
   </section>
 
   <section title="Operational Considerations">
     <t>
-      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, likely the local system will not be able to inform the remote peer through a BGP message as to why the session is being closed by sending a NOTIFICATION.
-      This documents suggests that a NOTIFICATION message with the "Send Hold Timer Expired" error code is still sent, meanwhile an error message SHOULD be logged into the local system.
+      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the session is being closed.
+      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code still is made, if doing so will not delay closing the BGP connection.
+      Meanwhile an error message is logged into the local system.
     </t>
     <t>
       Other mechanisms can be used as well, for example BGP speakers SHOULD provide this reason as part of their operational state; e.g. bgpPeerLastError in the <xref target="RFC4273">BGP MIB</xref>.
