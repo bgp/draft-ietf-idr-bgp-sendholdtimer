@@ -225,7 +225,7 @@
           </list>
         </t>
         <t>
-          Each time the local system sends a KEEPALIVE or UPDATE message, it restarts its SendHoldTimer; unless the negotiated HoldTime value is zero in which case the SendHoldTimer is stopped.
+          Each time the local system sends a KEEPALIVE or UPDATE message, it restarts its SendHoldTimer unless the negotiated HoldTime value is zero, in which case the SendHoldTimer is stopped.
         </t>
       </list>
     </t>
@@ -240,15 +240,15 @@
 
   <section title="Send Hold Timer Expired Error Handling">
     <t>
-        If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP connection MUST be closed.
-        Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
+      If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP connection MUST be closed.
+      Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
     </t>
   </section>
 
   <section title="Operational Considerations">
     <t>
       When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the session is being closed.
-      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code still is made, if doing so will not delay closing the BGP connection.
+      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP connection.
       Meanwhile an error message is logged into the local system.
     </t>
     <t>
