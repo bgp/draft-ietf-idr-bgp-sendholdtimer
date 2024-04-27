@@ -227,6 +227,9 @@
         <t>
           Each time the local system sends a KEEPALIVE or UPDATE message, it restarts its SendHoldTimer unless the negotiated HoldTime value is zero, in which case the SendHoldTimer is stopped.
         </t>
+        <t>
+          When in the Established state, any time the state transitions out of the Established state, the SendHoldTimer should be set to zero." 
+        </t>
       </list>
     </t>
   </section>
