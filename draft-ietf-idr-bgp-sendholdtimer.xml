@@ -119,7 +119,7 @@
       This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
-      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked session to be torn down.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked session to be recognized.
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
