@@ -201,7 +201,7 @@
            (Event 26)), the local system:
           <list style="hanging">
             <t hangText="-">restarts the HoldTimer,</t>
-            <t hangText="-">sets the SendHoldTimer to the default or configured value of SendHoldTime, and</t>
+            <t hangText="-">starts the SendHoldTimer if the SendHoldTime is non-zero, and</t>
             <t hangText="-">changes its state to Established.</t>
           </list></t>
       </dd>
