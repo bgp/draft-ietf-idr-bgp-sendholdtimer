@@ -195,7 +195,7 @@
             <t hangText="-">changes its state to Established.</t>
           </list></t>
       </dd>
-      <dt>Next Text:</dt>
+      <dt>New Text:</dt>
       <dd>
         <t>If the local system receives a KEEPALIVE message (KeepAliveMsg
            (Event 26)), the local system:
@@ -225,7 +225,7 @@
           </list>
         </t>
         <t>
-          Each time the local system sends a KEEPALIVE or UPDATE message, it restarts its SendHoldTimer unless the negotiated HoldTime value is zero, in which case the SendHoldTimer is stopped.
+          Each time the local system sends a BGP message, it restarts the SendHoldTimer unless the SendHoldTime value is zero, in which case the SendHoldTimer is stopped.
         </t>
       </list>
     </t>
