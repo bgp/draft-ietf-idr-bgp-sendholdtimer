@@ -115,7 +115,7 @@
       This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
     </t>
     <t>
-      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the ESTABLISHED state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
+      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the Established state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
       This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
@@ -226,6 +226,9 @@
         </t>
         <t>
           Each time the local system sends a BGP message, it restarts the SendHoldTimer unless the SendHoldTime value is zero, in which case the SendHoldTimer is stopped.
+        </t>
+        <t>
+          The SendHoldTimer is stopped following any transition out of the Established state.
         </t>
       </list>
     </t>
