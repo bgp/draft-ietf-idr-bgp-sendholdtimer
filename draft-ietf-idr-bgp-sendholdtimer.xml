@@ -225,7 +225,7 @@
           </list>
         </t>
         <t>
-          Each time the local system sends a BGP message, it restarts the SendHoldTimer unless the SendHoldTime value is zero, in which case the SendHoldTimer is stopped.
+          Each time the local system sends a BGP message, it restarts the SendHoldTimer unless the SendHoldTime value is zero or the negotiated HoldTime value is zero, in which case the SendHoldTimer is stopped.
         </t>
         <t>
           The SendHoldTimer is stopped following any transition out of the Established state.
