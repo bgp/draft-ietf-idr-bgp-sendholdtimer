@@ -104,7 +104,7 @@
       Through standardization of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
-      BGP speakers following this specification do not exclusively rely on remote systems closing blocked connections, but will also locally close connections.
+      BGP speakers following this specification do not rely exclusively on remote systems closing blocked sessions, but will also locally close blocked sessions.
     </t>
 
   </section>
