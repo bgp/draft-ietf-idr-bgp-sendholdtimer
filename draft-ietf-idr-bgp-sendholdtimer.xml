@@ -73,7 +73,7 @@
     <t>
       This document defines the SendHoldtimer, along with the SendHoldTimer_Expires event, for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
       Implementation of the SendHoldTimer helps overcome situations where a BGP session is not terminated after the local system detects that the remote system is not processing BGP messages.
-      This document specifies that the local system should close the BGP connection and not solely rely on the remote system for session closure when the SendHoldTimer expires.
+      This document specifies that the local system should close the BGP session and not solely rely on the remote system for session closure when the SendHoldTimer expires.
       This document updates RFC4271.
     </t>
 
@@ -145,7 +145,7 @@
 
   <section title="Session Attributes">
     <t>
-      The following optional session attributes for each connection are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
+      The following optional session attributes for each session are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
     </t>
 
     <t>
@@ -243,7 +243,7 @@
 
   <section title="Send Hold Timer Expired Error Handling">
     <t>
-      If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP connection MUST be closed.
+      If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP session MUST be closed.
       Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
     </t>
   </section>
@@ -270,7 +270,7 @@
   <section title="Operational Considerations">
     <t>
       When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the session is being closed.
-      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP connection.
+      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP session.
       Meanwhile an error message is logged into the local system.
     </t>
     <t>
