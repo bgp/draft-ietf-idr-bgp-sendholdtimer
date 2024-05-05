@@ -243,7 +243,7 @@
 
   <section title="Send Hold Timer Expired Error Handling">
     <t>
-      If a system does not send successive KEEPALIVE or UPDATE messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP session MUST be closed.
+      If the local system does not send any BGP messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP session MUST be closed.
       Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
     </t>
   </section>
