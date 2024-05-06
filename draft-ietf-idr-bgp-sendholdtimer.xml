@@ -63,17 +63,15 @@
   <area>Routing</area>
   <workgroup>IDR</workgroup>
   <keyword>BGP</keyword>
-  <keyword>session</keyword>
   <keyword>TCP</keyword>
-  <keyword>EBGP</keyword>
 
 
   <abstract>
 
     <t>
       This document defines the SendHoldtimer, along with the SendHoldTimer_Expires event, for the Border Gateway Protocol (BGP) Finite State Machine (FSM).
-      Implementation of the SendHoldTimer helps overcome situations where a BGP session is not terminated after the local system detects that the remote system is not processing BGP messages.
-      This document specifies that the local system should close the BGP session and not solely rely on the remote system for session closure when the SendHoldTimer expires.
+      Implementation of the SendHoldTimer helps overcome situations where a BGP connection is not terminated after the local system detects that the remote system is not processing BGP messages.
+      This document specifies that the local system should close the BGP connection and not solely rely on the remote system for connection closure when the SendHoldTimer expires.
       This document updates RFC4271.
     </t>
 
@@ -96,15 +94,15 @@
     </t>
 
     <t>
-      Failure to terminate a blocked BGP session can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a blocked BGP connection can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is thought to have contributed to IP traffic blackholing events in the global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
-      This specification intends to improve this situation by requiring that sessions be terminated if the local system has detected that the remote system cannot possibly have processed any BGP messages for the duration of the SendHoldTime.
+      This specification intends to improve this situation by requiring that BGP connections be terminated if the local system has detected that the remote system cannot possibly have processed any BGP messages for the duration of the SendHoldTime.
       Through standardization of the aforementioned requirement, operators will benefit from consistent behavior across different BGP implementations.
     </t>
     <t>
-      BGP speakers following this specification do not rely exclusively on remote systems closing blocked sessions, but will also locally close blocked sessions.
+      BGP speakers following this specification do not rely exclusively on remote systems closing blocked connections, but will also locally close blocked connections.
     </t>
 
   </section>
@@ -119,12 +117,12 @@
       This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
-      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked session to be recognized.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked connection to be recognized.
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
       This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
-      In case of a stalled state, the BGP session can be restarted.
+      In case of a stalled state, the BGP connection can be restarted.
     </t>
   </section>
 
@@ -137,7 +135,7 @@
 
   <section title="Session Attributes">
     <t>
-      The following optional session attributes for each session are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
+      The following optional session attributes for each connection are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
     </t>
 
     <t>
@@ -235,7 +233,7 @@
 
   <section title="Send Hold Timer Expired Error Handling">
     <t>
-      If the local system does not send any BGP messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP session MUST be closed.
+      If the local system does not send any BGP messages within the period specified in SendHoldTime, then a NOTIFICATION message with the "Send Hold Timer Expired" Error Code MAY be sent and the BGP connection MUST be closed.
       Additionally, an error MUST be logged in the local system, indicating the Send Hold Timer Expired Error Code.
     </t>
   </section>
@@ -248,14 +246,14 @@
       Accordingly, it is RECOMMENDED that implementations of this specification enable SendHoldtimer by default, without requiring additional configuration of the BGP speaking device.
     </t>
     <t>
-      The default value of SendHoldTime for a BGP session SHOULD be the greater of:
+      The default value of SendHoldTime for a BGP connection SHOULD be the greater of:
       <list style="hanging">
         <t hangText="-">8 minutes; or</t>
         <t hangText="-">2 times the negotiated HoldTime</t>
       </list>
     </t>
     <t>
-      Implementations MAY make the value of SendHoldTime configurable, either globally or on a per-session basis, within the constraints set out in <xref target="timers"/> above.
+      Implementations MAY make the value of SendHoldTime configurable, either globally or on a per-peer basis, within the constraints set out in <xref target="timers"/> above.
     </t>
     <t>
       The subcode for NOTIFICATION message "Send Hold Timer Expired" is set to 0 and is not used, no additional data is to be appended to the end of a "Send Hold Timer Expired" NOTIFICATION message.
@@ -264,8 +262,8 @@
 
   <section title="Operational Considerations">
     <t>
-      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the session is being closed.
-      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP session.
+      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the connection is being closed.
+      This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP connection.
       Meanwhile an error message is logged into the local system.
     </t>
     <t>
