@@ -228,7 +228,7 @@
 
   <section title="Changes to BGP Timers" anchor="timers">
     <t><xref target="RFC4271" section="10"/> summarizes BGP Timers. This document adds another BGP timer: SendHoldTimer.</t>
-    <t>SendHoldTime is an FSM attribute that stores the initial value for the SendHoldTimer. If SendHoldTime is non-zero then it MUST be greater than the value of HoldTime.</t>
+    <t>SendHoldTime is an FSM attribute that stores the initial value for the SendHoldTimer. If SendHoldTime is non-zero then it MUST be greater than the value of HoldTime, see <xref target="implcons"/> for suggested default values.</t>
   </section>
 
   </section>
@@ -240,7 +240,7 @@
     </t>
   </section>
 
-  <section title="Implementation Considerations">
+  <section title="Implementation Considerations" anchor="implcons">>
     <t>
       Due to the relative rarity of the failure mode that this specification is designed to address, and also the fact that network operators may be unfamiliar with the formal specification of BGP fault detection mechanisms such as HoldTimer, it is likely that a large number of operators are unaware of the necessity of an additional mechanism such as SendHoldtimer.
     </t>
