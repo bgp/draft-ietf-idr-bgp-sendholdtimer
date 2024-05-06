@@ -240,7 +240,7 @@
     </t>
   </section>
 
-  <section title="Implementation Considerations" anchor="implcons">>
+  <section title="Implementation Considerations" anchor="implcons">
     <t>
       Due to the relative rarity of the failure mode that this specification is designed to address, and also the fact that network operators may be unfamiliar with the formal specification of BGP fault detection mechanisms such as HoldTimer, it is likely that a large number of operators are unaware of the necessity of an additional mechanism such as SendHoldtimer.
     </t>
