@@ -257,6 +257,9 @@
     <t>
       Implementations MAY make the value of SendHoldTime configurable, either globally or on a per-session basis, within the constraints set out in <xref target="timers"/> above.
     </t>
+    <t>
+      The subcode for NOTIFICATION message "Send Hold Timer Expired" is set to 0 and is not used, no additional data is to be appended to the end of a "Send Hold Timer Expired" NOTIFICATION message.
+    </t>
   </section>
 
   <section title="Operational Considerations">
