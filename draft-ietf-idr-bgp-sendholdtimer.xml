@@ -129,14 +129,6 @@
   </section>
 
   <section title="SendHoldTimer - Changes to RFC 4271">
-  <!-- todo:
-
-     rfc 4271 section 4 - explain the sendholdtimer does not need to be negotiated
-     rfc 4271 section 6.* - Send Hold Timer Expired Error Handling
-     rfc 4271 section 8.1.1 - event
-     rfc 4271 section 8.1.3 - timer
-     rfc 4271 section 8.2.1.4 - fsm event numbers?
-    -->
 
   <t>
     BGP speakers are implemented following a conceptual model "BGP Finite State Machine" (FSM), which is outlined in section 8 of <xref target="RFC4271"/>.
