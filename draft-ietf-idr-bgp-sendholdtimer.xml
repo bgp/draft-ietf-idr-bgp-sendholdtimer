@@ -121,7 +121,7 @@
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
-      There are three detrimental aspects to the problem of not robustly handling blocked peers:
+      There are three detrimental aspects to not handling blocked peers:
       <list style="none">
         <t>
           Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
