@@ -94,7 +94,7 @@
     </t>
 
     <t>
-      Failure to terminate a blocked BGP connection can result in Denial Of Service, and the subsequent failure to generate and deliver BGP WITHDRAW and UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a blocked BGP connection can result in network reachability issues, and the subsequent failure to generate and deliver BGP UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is thought to have contributed to IP traffic blackholing events in the global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
@@ -114,11 +114,25 @@
     </t>
     <t>
       An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the Established state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
-      This 0 window prevents the local system from sending KEEPALIVE, CEASE, WITHDRAW, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
+      This 0 window prevents the local system from sending KEEPALIVE, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
     </t>
     <t>
       Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked connection to be recognized.
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
+    </t>
+    <t>
+      There are three detrimental aspects to the problem of not robustly handling blocked peers:
+      <list style="none">
+        <t>
+          Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
+        </t>
+        <t>
+          Failure to disconnect from a blocked peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
+        </t>
+        <t>
+          Failure to disconnect from a blocked peer hinders the local system's ability to inform other BGP peers with current network reachability information.
+        </t>
+      </list>
     </t>
     <t>
       This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
@@ -272,26 +286,8 @@
   </section>
 
   <section title="Security Considerations">
-
     <t>
-      This specification addresses the vulnerability of a BGP speaker to a potential attack whereby a BGP peer can pretend to be unable to process BGP messages and in doing so create a scenario where the local system is poisoned with stale routing information.
-    </t>
-    <t>
-      There are three detrimental aspects to the problem of not robustly handling blocked peers:
-      <list style="none">
-        <t>
-          Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
-        </t>
-        <t>
-          Failure to disconnect from a blocked peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
-        </t>
-        <t>
-          Failure to disconnect from a blocked peer hinders the local system's ability to inform other BGP peers with current network reachability information.
-        </t>
-      </list>
-    </t>
-    <t>
-      In other respects, this specification does not change BGP's security characteristics.
+      This specification does not change BGP's security characteristics.
     </t>
   </section>
 
@@ -313,8 +309,9 @@
       Susan Hares,
       Keyur Patel,
       Ben Maddison,
+      Claudio Jeker,
       and
-      Claudio Jeker
+      John Scudder
       for their helpful review of this document.
     </t>
   </section>
@@ -326,7 +323,6 @@
   <references title="Normative References">
     <?rfc include="reference.RFC.2119.xml"?>
     <?rfc include="reference.RFC.4271.xml"?>
-    <?rfc include="reference.RFC.4273.xml"?>
     <?rfc include="reference.RFC.8174.xml"?>
 
     <reference anchor="RFC9293" target="https://www.rfc-editor.org/info/rfc9293">
@@ -386,6 +382,8 @@
         <date month="april" year="2019" />
       </front>
     </reference>
+
+    <?rfc include="reference.RFC.4273.xml"?>
 
   </references>
 
