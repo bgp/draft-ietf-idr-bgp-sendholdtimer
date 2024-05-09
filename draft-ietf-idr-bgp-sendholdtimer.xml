@@ -121,18 +121,8 @@
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
-      There are three detrimental aspects to not handling blocked peers:
-      <list style="none">
-        <t>
-          Failure to send BGP messages to a peer implies the peer is operating based on stale routing information.
-        </t>
-        <t>
-          Failure to disconnect from a blocked peer hinders the local system's ability to construct a non-stale local Routing Information Base (RIB).
-        </t>
-        <t>
-          Failure to disconnect from a blocked peer hinders the local system's ability to inform other BGP peers with current network reachability information.
-        </t>
-      </list>
+      The major issue arising from a BGP speaker being unable to send a BGP message to a given remote peer is that as a result that peer subsequently is operating based on stale routing information.
+      Failure to send (and thus receive) BGP messages on a single BGP session can negatively impact the ability of an entire autonomous system (or even a group of autonomous systems) to converge.
     </t>
     <t>
       This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
