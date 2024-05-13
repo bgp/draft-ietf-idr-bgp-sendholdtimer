@@ -94,7 +94,7 @@
     </t>
 
     <t>
-      Failure to terminate a blocked BGP connection can result in network reachability issues, and the subsequent failure to generate and deliver BGP UPDATE messages to other BGP peers of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a blocked BGP connection can result in network reachability issues, and the subsequent failure to generate and deliver BGP UPDATE messages to other BGP speaker of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is thought to have contributed to IP traffic blackholing events in the global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
@@ -109,23 +109,23 @@
 
   <section title="Example of a problematic scenario">
     <t>
-      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote peer may cause data on the BGP socket in the local system to accumulate ad infinitum.
-      This could result in forwarding failure and traffic loss, as the overwhelmed peer continues to utilize stale routes.
+      In implementations lacking the concept of a SendHoldTimer, a malfunctioning or overwhelmed remote speaker may cause data on the BGP socket in the local system to accumulate ad infinitum.
+      This could result in forwarding failure and traffic loss, as the overwhelmed speaker continues to utilize stale routes.
     </t>
     <t>
-      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the Established state to encounter a BGP peer that is advertising a TCP Receive Window (RCV.WND) of size zero.
-      This 0 window prevents the local system from sending KEEPALIVE, UPDATE, or any other critical BGP messages across the network socket to the remote peer.
+      An example fault state: as BGP runs over TCP <xref target="RFC9293" />, it is possible for a BGP speaker in the Established state to encounter a BGP speaker that is advertising a TCP Receive Window (RCV.WND) of size zero.
+      This 0 window prevents the local system from sending KEEPALIVE, UPDATE, or any other critical BGP messages across the network socket to the remote speaker.
     </t>
     <t>
-      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the peer's current Receive Window size, and there is no existing BGP mechanism for such a blocked connection to be recognized.
+      Generally BGP implementations have no visibility into lower-layer subsystems such as TCP or the speaker's current Receive Window size, and there is no existing BGP mechanism for such a blocked connection to be recognized.
       Hence BGP implementations are not able to handle this situation in a consistent fashion.
     </t>
     <t>
-      The major issue arising from a BGP speaker being unable to send a BGP message to a given remote peer is that as a result that peer subsequently is operating based on stale routing information.
-      Failure of the BGP speaker to send (and thus the remote peer to receive) BGP messages on a single BGP session can negatively impact the ability of an entire autonomous system (or even a group of autonomous systems) to converge.
+      The major issue arising from a BGP speaker being unable to send a BGP message to a given remote speaker is that as a result that speaker subsequently is operating based on stale routing information.
+      Failure of the BGP speaker to send (and thus the remote speaker to receive) BGP messages on a single BGP session can negatively impact the ability of an entire autonomous system (or even a group of autonomous systems) to converge.
     </t>
     <t>
-      This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP peer is progressing (data is being transmitted), or persisting in a stalled state.
+      This document provides a mechanism for BGP implementations to detect whether the TCP socket to a BGP speaker is progressing (data is being transmitted), or persisting in a stalled state.
       In case of stalled state, the BGP connection can be terminated.
     </t>
   </section>
@@ -266,7 +266,7 @@
 
   <section title="Operational Considerations">
     <t>
-      When the local system recognizes a remote peer is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the connection is being closed.
+      When the local system recognizes a remote speaker is not processing any BGP messages for the duration of the SendHoldTime, it is likely that the local system will not be able to inform the remote peer through a NOTIFICATION message as to why the connection is being closed.
       This documents suggests that an attempt to send a NOTIFICATION message with the "Send Hold Timer Expired" error code is still made, if doing so will not delay closing the BGP connection.
       Meanwhile an error message is logged into the local system.
     </t>
