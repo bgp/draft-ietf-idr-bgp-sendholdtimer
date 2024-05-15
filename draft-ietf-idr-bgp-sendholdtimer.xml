@@ -94,7 +94,7 @@
     </t>
 
     <t>
-      Failure to terminate a blocked BGP connection can result in network reachability issues, and the subsequent failure to generate and deliver BGP UPDATE messages to other BGP speaker of the local system is detrimental to all participants of the inter-domain routing system.
+      Failure to terminate a blocked BGP connection can result in network reachability issues, and the subsequent failure to generate and deliver BGP UPDATE messages to another BGP speaker of the local system is detrimental to all participants of the inter-domain routing system.
       This phenomena is thought to have contributed to IP traffic blackholing events in the global Internet routing system <xref target="bgpzombies"/>.
     </t>
     <t>
