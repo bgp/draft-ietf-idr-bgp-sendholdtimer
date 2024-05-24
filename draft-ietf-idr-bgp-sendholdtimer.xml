@@ -145,10 +145,10 @@
     <t>
       <list style="empty">
         <t>
-          9) SendHoldTimer
+          14) SendHoldTimer
         </t>
         <t>
-          10) SendHoldTime
+          15) SendHoldTime
         </t>
       </list>
     </t>
@@ -164,7 +164,7 @@
     Another timer event is added to Section 8.1.3 of <xref target="RFC4271"/> as following:
   </t>
   <dl newline="true">
-    <dt>Event XX1: SendHoldTimer_Expires</dt>
+    <dt>Event 29: SendHoldTimer_Expires</dt>
     <dd>
       <dl>
       <dt>Definition:</dt>
@@ -206,7 +206,7 @@
       is zero.":</t>
       <t>
       <list style="empty">
-        <t>If the SendHoldTimer_Expires (Event XX1), the local system:
+        <t>If the SendHoldTimer_Expires (Event 29), the local system:
           <list style="hanging">
             <t hangText="-">(optionally) sends a NOTIFICATION message with the BGP Error Code "Send Hold Timer Expired" if the local system can determine that doing so will not delay the following actions in this paragraph,</t>
             <t hangText="-">logs an error message in the local system with the BGP Error Code "Send Hold Timer Expired",</t>
@@ -222,7 +222,7 @@
           Each time the local system sends a BGP message, it restarts the SendHoldTimer unless the SendHoldTime value is zero or the negotiated HoldTime value is zero, in which cases the SendHoldTimer is stopped.
         </t>
         <t>
-          The SendHoldTimer is stopped following any transition out of the Established state.
+          The SendHoldTimer is stopped following any transition out of the Established state as part of the "release all BGP resources" action.
         </t>
       </list>
     </t>
