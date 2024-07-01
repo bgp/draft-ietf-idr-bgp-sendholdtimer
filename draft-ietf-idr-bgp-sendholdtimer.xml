@@ -10,9 +10,9 @@
 
 <rfc
   category="std"
-  docName="draft-ietf-idr-bgp-sendholdtimer-10"
+  docName="draft-ietf-idr-bgp-sendholdtimer-11"
   updates="4271"
-  ipr="trust200902"
+  ipr="pre5378Trust200902"
   submissionType="IETF"
   consensus="true">
 
@@ -139,7 +139,7 @@
 
   <section title="Session Attributes">
     <t>
-      The following optional session attributes for each connection are added to Section 8, before "The state session attribute indicates the current state of the BGP FSM":
+      The following optional session attributes for each connection are added to Section 8, before "The optional session attributes support different features of the BGP functionality that have implications for the BGP FSM state transitions":
     </t>
 
     <t>
@@ -229,7 +229,7 @@
   </section>
 
   <section title="Changes to BGP Timers" anchor="timers">
-    <t><xref target="RFC4271" section="10"/> summarizes BGP Timers. This document adds another BGP timer: SendHoldTimer.</t>
+    <t><xref target="RFC4271" section="10"/> summarizes BGP Timers. This document adds another optional BGP timer: SendHoldTimer.</t>
     <t>SendHoldTime is an FSM attribute that stores the initial value for the SendHoldTimer. If SendHoldTime is non-zero then it MUST be greater than the value of HoldTime, see <xref target="implcons"/> for suggested default values.</t>
   </section>
 
@@ -277,7 +277,7 @@
 
   <section title="Security Considerations">
     <t>
-      This specification does not change BGP's security characteristics.
+      This specification does not change BGP's security characteristics. Implementing the BGP SendHoldTimer as specified in this document will enhance network resilience by terminating connections with malfunctioning or overwhelmed remote peers.
     </t>
   </section>
 
