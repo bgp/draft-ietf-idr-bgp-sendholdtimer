@@ -10,9 +10,9 @@
 
 <rfc
   category="std"
-  docName="draft-ietf-idr-bgp-sendholdtimer-11"
+  docName="draft-ietf-idr-bgp-sendholdtimer-12"
   updates="4271"
-  ipr="pre5378Trust200902"
+  ipr="trust200902"
   submissionType="IETF"
   consensus="true">
 
