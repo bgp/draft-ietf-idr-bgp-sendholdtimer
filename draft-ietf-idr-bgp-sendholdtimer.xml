@@ -34,7 +34,7 @@
   </author>
 
   <author fullname="Ben Cartwright-Cox" initials="B." surname="Cartwright-Cox">
-    <organization>Port 179 Ltd</organization>
+    <organization abbrev="Port 179">Port 179 Ltd</organization>
     <address>
       <postal>
         <street />
@@ -47,7 +47,7 @@
   </author>
 
   <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
-    <organization>Futurewei Technologies</organization>
+    <organization abbrev="Futurewei">Futurewei Technologies</organization>
     <address>
       <postal>
         <street />
