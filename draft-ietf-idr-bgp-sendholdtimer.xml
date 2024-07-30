@@ -248,7 +248,7 @@
     <blockquote>
       <t>
         SendHoldTime is an FSM attribute that stores the initial value for the SendHoldTimer.
-        If SendHoldTime is non-zero then it MUST be greater than the value of HoldTime, see <xref target="implcons"/> for suggested default values.
+        If SendHoldTime is non-zero then it MUST be greater than the value of HoldTime, see <xref section="5" target="I-D.ietf-idr-bgp-sendholdtimer"/> for suggested default values.
       </t>
     </blockquote>
   </section>
@@ -348,6 +348,27 @@
       <seriesInfo name="RFC" value="9293"/>
       <seriesInfo name="DOI" value="10.17487/RFC9293"/>
     </reference>
+
+  <reference anchor="I-D.ietf-idr-bgp-sendholdtimer" target="https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-sendholdtimer">
+    <front>
+      <title>Border Gateway Protocol 4 (BGP-4) Send Hold Timer</title>
+      <author fullname="Job Snijders" initials="J." surname="Snijders">
+        <organization>Fastly</organization>
+      </author>
+      <author fullname="Ben Cartwright-Cox" initials="B." surname="Cartwright-Cox">
+        <organization>Port 179 Ltd</organization>
+      </author>
+      <author fullname="Yingzhen Qu" initials="Y." surname="Qu">
+        <organization>Futurewei Technologies</organization>
+      </author>
+      <date />
+      <abstract>
+        <t>This document defines the SendHoldtimer, along with the SendHoldTimer_Expires event, for the Border Gateway Protocol (BGP) Finite State Machine (FSM). Implementation of the SendHoldTimer helps overcome situations where a BGP connection is not terminated after the local system detects that the remote system is not processing BGP messages. This document specifies that the local system should close the BGP connection and not solely rely on the remote system for connection closure when the SendHoldTimer expires. This document updates RFC4271.</t>
+      </abstract>
+    </front>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-idr-bgp-sendholdtimer"/>
+  </reference>
+
 
   </references>
 
