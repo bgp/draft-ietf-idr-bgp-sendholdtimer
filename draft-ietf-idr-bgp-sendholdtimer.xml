@@ -349,6 +349,12 @@
       <seriesInfo name="DOI" value="10.17487/RFC9293"/>
     </reference>
 
+  <!-- NOTE TO RFC-EDITOR:
+       The below reference is intended as a 'self-reference', but unsure how to do that properly in xml2rfc
+       See https://mailarchive.ietf.org/arch/msg/idr/sY-om-d3kZC1ypoBXAS17NCXtXk/
+       and https://mailarchive.ietf.org/arch/msg/idr/L6MinGVjHn94gRhCi2lGAQ9GoHw/
+       for discussion on the concern of carrying over a literal non-reference into the patched target document content
+  -->
   <reference anchor="I-D.ietf-idr-bgp-sendholdtimer" target="https://datatracker.ietf.org/doc/html/draft-ietf-idr-bgp-sendholdtimer">
     <front>
       <title>Border Gateway Protocol 4 (BGP-4) Send Hold Timer</title>
