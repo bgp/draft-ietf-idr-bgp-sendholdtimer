@@ -298,7 +298,7 @@
 
   <section title="IANA Considerations">
     <t>
-      IANA has registered code 8 for "Send Hold Timer Expired" in the "BGP Error (Notification) Codes" sub-registry under the "Border Gateway Protocol (BGP) Parameters" registry.
+      IANA has registered code 8 for "Send Hold Timer Expired" in the "BGP Error (Notification) Codes" registry in the "Border Gateway Protocol (BGP) Parameters" registry group.
     </t>
   </section>
 
