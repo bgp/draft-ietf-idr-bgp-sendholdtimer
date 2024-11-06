@@ -1,5 +1,5 @@
-BGP SendHoldTimer IETF Draft Repository
-=========================================
+RFC 9687 - BGP SendHoldTimer IETF Draft Repository
+==================================================
 
 <img src="http://sobornost.net/~job/bgp_holdtimer_tcp_deathgrip.gif">
 
@@ -19,6 +19,7 @@ Ten years ago 'a horse was put to rest, but was it?
 
 2024 - draft-ietf-idr-bgp-sendholdtimer Working Group Last Call
 
+2024 - [RFC 9687](https://www.rfc-editor.org/rfc/rfc9687.html) published!
 
 Authoring Conventions
 ---------------------
